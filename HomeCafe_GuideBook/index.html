@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커피 브루잉 다이어리 - 15년 노하우 홈카페 비법서</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts (Noto Sans KR, Gaegu - Comic style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans KR', 'sans-serif'],
+            hand: ['Gaegu', 'cursive'],
+          },
+          colors: {
+            coffee: {
+              50: '#fdfbf7',
+              100: '#f8f1e5',
+              200: '#e7d4b7',
+              300: '#d5b68a',
+              400: '#c09561',
+              500: '#aa7c47',
+              600: '#8e6236',
+              700: '#724b27',
+              800: '#56361a',
+              900: '#3c230f',
+            }
+          },
+          boxShadow: {
+            'brutal': '4px 4px 0px 0px #000000',
+            'brutal-lg': '8px 8px 0px 0px #000000',
+            'brutal-sm': '2px 2px 0px 0px #000000',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* A4 인쇄를 위한 정밀 퍼블리싱 스타일 */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11px;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-page {
+        page-break-after: always;
+        page-break-inside: avoid;
+        padding: 25px !important;
+        margin: 0 !important;
+        border: 4px solid #000000 !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        background: white !important;
+        min-height: 285mm !important; /* A4 높이에 최적 대응 */
+        box-sizing: border-box;
+      }
+      .print-no-break {
+        page-break-inside: avoid;
+      }
+      /* 웹 브라우저 인쇄 여백 강제 */
+      @page {
+        size: A4 portrait;
+        margin: 10mm 10mm 10mm 10mm;
+      }
+      /* 애니메이션 및 그림자 강제 조정 */
+      .animate-pulse, .animate-bounce {
+        animation: none !important;
+      }
+      .shadow-brutal, .shadow-brutal-lg {
+        box-shadow: none !important;
+        border: 2px solid #000000 !important;
+      }
+    }
+
+    /* 수동 물방울 애니메이션용 */
+    @keyframes drop-drip {
+      0% { transform: translateY(-10px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(35px); opacity: 0; }
+    }
+    .drip-animation {
+      animation: drop-drip 1.5s infinite linear;
+    }
+    
+    /* 웹툰 특화 말풍선 */
+    .comic-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 35px;
+      border-width: 12px 12px 0;
+      border-style: solid;
+      border-color: #ffffff transparent;
+      display: block;
+      width: 0;
+      filter: drop-shadow(0px 2px 0px #000);
+    }
+    .comic-bubble-border::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 33px;
+      border-width: 15px 15px 0;
+      border-style: solid;
+      border-color: #000000 transparent;
+      display: block;
+      width: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body class="bg-[#faf6f0] text-slate-900 font-sans selection:bg-yellow-200 leading-relaxed min-h-screen pb-12">
+
+  <!-- 상단 헤더 (모바일 및 PC 화면용 헤더) -->
+  <header class="no-print bg-[#f8f1e5] border-b-4 border-black py-4 px-4 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-yellow-300 border-2 border-black p-2 rounded-full text-xl shadow-brutal-sm">☕</div>
+        <div>
+          <h1 class="text-base md:text-lg font-black tracking-tight text-slate-950 flex items-center gap-1.5">
+            커피 브루잉 다이어리 <span class="bg-black text-yellow-300 text-[10px] px-2 py-0.5 rounded font-mono">Ver 7.0</span>
+          </h1>
+          <p class="text-xs text-slate-600 font-medium">15년 차 양지원 바리스타의 무조건 성공하는 홈카페 가이드북</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="window.print()" class="bg-yellow-300 hover:bg-yellow-400 text-black border-2 border-black font-black px-4 py-2 rounded-lg text-xs transition-all duration-150 flex items-center gap-2 shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm">
+          <span>🖨️ A4 가이드북 인쇄 / PDF 저장</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 sm:py-12 space-y-16">
+
+    <!-- PAGE 1: COVER PAGE & YANG-BARI INTRO -->
+    <section class="print-page bg-white rounded-2xl border-4 border-black p-8 md:p-12 shadow-brutal-lg relative overflow-hidden flex flex-col justify-between min-h-[85vh] md:min-h-[960px]">
+      <!-- 탑 배너 영역 -->
+      <div class="flex justify-between items-start">
+        <div class="inline-flex items-center gap-2 bg-yellow-300 border-2 border-black text-black text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-brutal-sm">
+          <span>🏆 15 Years Master Class</span>
+        </div>
+        <div class="text-right">
+          <p class="text-[11px] text-slate-400 font-bold">15년차 커피 에세이 비법서</p>
+          <p class="text-xs text-slate-900 font-black">브루잉 다이어리</p>
+        </div>
+      </div>
+
+      <!-- 메인 타이틀 영역 -->
+      <div class="my-6">
+        <h1 class="text-4xl sm:text-6xl font-black text-slate-950 leading-none tracking-tight">
+          초보자를 위한<br>
+          <span class="text-coffee-600 relative inline-block my-2">
+            실패 없는 드립커피
+            <span class="absolute bottom-1.5 left-0 w-full h-4 bg-yellow-200 -z-10 transform -rotate-1"></span>
+          </span><br>
+          인포그래픽 북
+        </h1>
+        <p class="text-base text-slate-600 mt-6 max-w-xl font-medium">
+          수백만 원 바리스타 학원비와 끝없는 장비병으로 인한 이중 지출은 이제 끝냅니다. 
+          똥손도 대충 부으면 프로의 향을 내는 놀라운 장비의 비밀과 챔피언 추출 공식을 엄선 수록했습니다.
+        </p>
+      </div>
+
+      <!-- 양바리 프로필 카툰 패널 -->
+      <div class="bg-amber-50 rounded-xl border-4 border-black p-6 my-4 flex flex-col md:flex-row items-center gap-6 relative shadow-brutal-sm">
+        <div class="flex-shrink-0 relative">
+          <!-- 양바리 캐릭터 SVG (프로필 일러스트) -->
+          <svg class="w-28 h-28 text-coffee-800 bg-yellow-100 rounded-full p-2 border-4 border-black shadow-brutal-sm" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- 모자 (원두모양) -->
+            <path d="M50 8C32 8 20 20 20 38C20 50 28 60 40 66V78H60V66C72 60 80 50 80 38C80 20 68 8 50 8Z" fill="#56361a" stroke="#000" stroke-width="3"/>
+            <path d="M50 8V60" stroke="#000" stroke-width="2" stroke-dasharray="3 3"/>
+            <!-- 얼굴 -->
+            <circle cx="50" cy="54" r="21" fill="#fed7aa" stroke="#000" stroke-width="3"/>
+            <!-- 안경 -->
+            <circle cx="41" cy="52" r="7" stroke="#000" stroke-width="3" fill="#fff"/>
+            <circle cx="59" cy="52" r="7" stroke="#000" stroke-width="3" fill="#fff"/>
+            <line x1="48" y1="52" x2="52" y2="52" stroke="#000" stroke-width="3"/>
+            <!-- 표정 -->
+            <path d="M46 62C48 64 52 64 54 62" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="34" cy="58" r="2.5" fill="#f87171"/>
+            <circle cx="66" cy="58" r="2.5" fill="#f87171"/>
+          </svg>
+          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-black px-2.5 py-0.5 rounded-md border-2 border-black shadow-brutal-sm">양바리</span>
+        </div>
+        
+        <!-- 말풍선 영역 -->
+        <div class="relative bg-white p-4 rounded-xl border-2 border-black flex-1">
+          <p class="font-hand text-2xl text-coffee-950 font-black mb-1">“장비병에 지갑 털리지 마세요!”</p>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            반갑습니다. 유튜브 <span class="font-bold">&lt;커피 브루잉 다이어리&gt;</span>의 양지원입니다. 
+            국가대표 안재혁 대표님께 치열한 실전을, 스페셜티 1세대 커피리브레 서필훈 사장님께 커피의 철학을 배웠습니다. 
+            단돈 10만 원만 쥐고 따라오시면, 카페 문 닫고 집에서 평생 맛있는 한 잔을 누릴 수 있습니다!
+          </p>
+          <span class="text-[10px] text-coffee-600 block mt-2 font-black">출처: 프롤로그 [Page 1-2]</span>
+        </div>
+      </div>
+
+      <!-- 에이전트 바닥 영역 -->
+      <div class="border-t-4 border-black pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <span class="text-[10px] text-slate-500 block uppercase font-black tracking-wider">Author</span>
+          <span class="font-black text-slate-900 text-base">양지원 (15년차 스페셜티 프로 바리스타)</span>
+        </div>
+        <div class="text-slate-500 text-xs sm:text-right font-medium">
+          <span>신라호텔 계열 브런치 &amp; 국가대표 매장 총괄 경험 [Page 1]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: 4-PANEL WEBTOON (하리오 V60의 비극) -->
+    <section class="print-page bg-white rounded-2xl border-4 border-black p-6 md:p-8 shadow-brutal-lg space-y-8">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <span class="bg-red-400 text-black border-2 border-black font-black text-xs px-3 py-1 rounded-full shadow-brutal-sm inline-block">Chapter 01</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">4컷 툰: 하리오 V60을 구매한 똥손의 최후</h2>
+        <p class="text-slate-600 text-xs font-semibold">입문자용 치트키 장비가 따로 존재하는 기술 과학적 이유를 만화로 밝힙니다. [Page 5]</p>
+      </div>
+
+      <!-- 뉴브루탈리즘 만화책 4컷 프레임 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        
+        <!-- panel 1 -->
+        <div class="border-4 border-black rounded-xl overflow-hidden shadow-brutal flex flex-col bg-sky-50">
+          <div class="bg-black text-white text-xs font-black px-3 py-1.5 flex justify-between">
+            <span>제1화: 환상에 빠진 바리스타</span>
+            <span class="text-yellow-300">★ 지망생</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="flex justify-between items-start gap-4">
+              <div class="relative bg-white p-3 rounded-lg border-2 border-black max-w-[70%]">
+                <p class="text-xs font-bold text-slate-800">“와! 유튜브에서 챔피언들은 다 ‘하리오 V60’ 쓰는구나! 무조건 산다!”</p>
+              </div>
+              <!-- 드로잉: 하리오 드리퍼 SVG -->
+              <svg class="w-16 h-16 text-red-500 flex-shrink-0 animate-bounce" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 30 L80 30 L65 70 L35 70 Z" stroke="#000" stroke-width="4" fill="#ffedd5"/>
+                <circle cx="50" cy="70" r="8" fill="#ef4444" stroke="#000" stroke-width="3"/>
+                <path d="M15 30 H85" stroke="#000" stroke-width="4"/>
+              </svg>
+            </div>
+            <p class="text-xs text-slate-600 font-medium bg-white/80 p-2.5 rounded border border-slate-300">
+              대회 우승자나 테크니션 바리스타의 드립 방식을 보고, 똑같은 드리퍼를 사면 나도 완벽한 산미를 낼 거라 착각하기 쉽습니다. [Page 5]
+            </p>
+          </div>
+        </div>
+
+        <!-- panel 2 -->
+        <div class="border-4 border-black rounded-xl overflow-hidden shadow-brutal flex flex-col bg-red-50">
+          <div class="bg-black text-white text-xs font-black px-3 py-1.5 flex justify-between">
+            <span>제2화: 채널링의 비명 소리</span>
+            <span class="text-red-400">🚨 대형 참사!</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="flex justify-between items-start gap-4">
+              <div class="relative bg-white p-3 rounded-lg border-2 border-black max-w-[75%]">
+                <p class="text-xs font-bold text-slate-800">“앗! 물이 그냥 콸콸 아래로 흐르네? 내 손도 달달 떨리는데??”</p>
+              </div>
+              <span class="text-4xl animate-pulse">🌧️💦🔥</span>
+            </div>
+            <p class="text-xs text-slate-600 font-medium bg-white/80 p-2.5 rounded border border-slate-300">
+              하리오 V60는 물구멍이 넓고 리브가 길어 가혹하리만큼 정교한 유속 조절을 요구합니다. 어설프게 부으면 맹물과 떫은맛이 동시 추출됩니다. [Page 5]
+            </p>
+          </div>
+        </div>
+
+        <!-- panel 3 -->
+        <div class="border-4 border-black rounded-xl overflow-hidden shadow-brutal flex flex-col bg-amber-50">
+          <div class="bg-black text-white text-xs font-black px-3 py-1.5 flex justify-between">
+            <span>제3화: 아픈 기억 속의 당근마켓</span>
+            <span class="text-slate-500">🗑️ 무덤행</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="flex justify-between items-start gap-4">
+              <div class="relative bg-white p-3 rounded-lg border-2 border-black max-w-[70%]">
+                <p class="text-xs font-bold text-slate-800">“사고 한 번 썼습니다... 눈물의 하리오 당근행... 커피는 어렵네요.”</p>
+              </div>
+              <!-- 박스 담긴 드리퍼 아이콘 -->
+              <div class="border-2 border-dashed border-slate-400 p-2 text-center text-xs bg-orange-100 rounded">
+                📦🥕<br><span class="text-[9px]">당근마켓</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 font-medium bg-white/80 p-2.5 rounded border border-slate-300">
+              결국 드립의 예민함에 질려버린 입문자들은 그대로 장비를 방출하고 가성비 캡슐로 회귀하며 수십만 원을 손해 봅니다. [Page 5]
+            </p>
+          </div>
+        </div>
+
+        <!-- panel 4 -->
+        <div class="border-4 border-black rounded-xl overflow-hidden shadow-brutal flex flex-col bg-emerald-50">
+          <div class="bg-black text-white text-xs font-black px-3 py-1.5 flex justify-between">
+            <span>제4화: 대충 부어도 맛있는 마법</span>
+            <span class="text-green-600">💡 칼리타 웨이브!</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="flex justify-between items-start gap-4">
+              <div class="relative bg-white p-3 rounded-lg border-2 border-black max-w-[70%]">
+                <p class="text-xs font-bold text-slate-800">“세상에! 바닥이 평평하고 구멍이 3개라 알아서 갓벽 추출되잖아!”</p>
+              </div>
+              <!-- 컵에 완벽히 떨어지는 하트 에스프레소 -->
+              <span class="text-4xl">❤️🥇☕</span>
+            </div>
+            <p class="text-xs text-slate-600 font-medium bg-white/80 p-2.5 rounded border border-slate-300">
+              칼리타 웨이브는 바닥이 평평하고 작은 3개의 홀이 내장되어 대충 물을 가득 쏟아부어도 유속 제어를 대신 해주는 과학적인 장비입니다. [Page 7]
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE 3: GEAR INFOGRAPHIC (10만원 졸업 가성비 세트) -->
+    <section class="print-page bg-white rounded-2xl border-4 border-black p-6 md:p-8 shadow-brutal-lg space-y-8">
+      <div class="border-b-4 border-black pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+        <div>
+          <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3 py-1 rounded-full shadow-brutal-sm inline-block mb-2">Chapter 02 &amp; 03</span>
+          <h2 class="text-2xl md:text-3xl font-black text-slate-950">남들 안 알려주는 "10만 원 종결템" 쇼핑 리스트</h2>
+          <p class="text-slate-600 text-xs font-medium">검색에 들어가는 에너지를 완벽 타파해 주는 홈카페 원스톱 종결 도표 [Page 9-12]</p>
+        </div>
+        <div class="bg-coffee-100 border-2 border-black px-3 py-1 rounded-lg text-xs font-black text-coffee-950">
+          부록: 쇼핑 요약 [Page 45]
+        </div>
+      </div>
+
+      <!-- 추천 2대 대조군 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- TYPE A -->
+        <div class="border-4 border-black rounded-2xl p-5 bg-coffee-50 shadow-brutal flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="bg-coffee-700 text-white border-2 border-black text-xs font-black px-3 py-1 rounded">Type A. 무조건 쉽고 맛있는 결과형</span>
+              <span class="text-xs font-black text-coffee-800">추천: 185 규격 ★</span>
+            </div>
+            <h3 class="text-xl font-black text-slate-900">칼리타 웨이브 185 (스텐)</h3>
+            <p class="text-xs text-slate-600 mt-2">일반 유리/도자기는 예열 실패 시 물 온도가 즉시 떡락합니다. 깨질 일이 없고 열전도율이 우수해 맛 편차가 없는 스테인리스 재질을 무조건 강권합니다. [Page 7]</p>
+
+            <div class="mt-6 space-y-3">
+              <div class="flex items-center gap-3 bg-white p-2.5 rounded border-2 border-black">
+                <span class="text-xl">🛠️</span>
+                <div class="text-[11px]">
+                  <p class="font-bold text-slate-900">드리퍼: 칼리타 웨이브 185 (스텐)</p>
+                  <p class="text-slate-500">텀블러 가득이나 2인분까지 폭넓게 소화 가능 (거거익선!)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white p-2.5 rounded border-2 border-black">
+                <span class="text-xl">🧪</span>
+                <div class="text-[11px]">
+                  <p class="font-bold text-slate-900">서버: 칼딘 내열유리 계량서버 (500ml)</p>
+                  <p class="text-slate-500">눈금 일치 시 저울 없이 눈으로 맛 감시 가능 [Page 11]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border-2 border-black p-3.5 rounded-xl mt-6">
+            <span class="bg-red-500 text-white font-black text-[9px] px-2 py-0.5 rounded border border-black uppercase">바리스타 총평</span>
+            <p class="text-[11px] font-semibold text-slate-700 mt-1.5">"눈금 달린 서버만 있으면 스마트 저울이 정말 필요치 않은 극상의 간편함!" [Page 11]</p>
+          </div>
+        </div>
+
+        <!-- TYPE B -->
+        <div class="border-4 border-black rounded-2xl p-5 bg-amber-50 shadow-brutal flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="bg-amber-700 text-white border-2 border-black text-xs font-black px-3 py-1 rounded">Type B. 연습과 힐링 병행 성장형</span>
+              <span class="text-xs font-black text-amber-800">추천: 200 규격 ★</span>
+            </div>
+            <h3 class="text-xl font-black text-slate-900">하리오 스위치 200 (세라믹)</h3>
+            <p class="text-xs text-slate-600 mt-2">일반 하리오 V60 드리퍼처럼 쓸 수도 있고, 실패했을 땐 아래 쇠구슬 스위치를 잠궈 침출식(물에 우리기)으로 100% 심폐소생을 꾀하는 만능형 드리퍼입니다. [Page 8]</p>
+
+            <div class="mt-6 space-y-3">
+              <div class="flex items-center gap-3 bg-white p-2.5 rounded border-2 border-black">
+                <span class="text-xl">🎛️</span>
+                <div class="text-[11px]">
+                  <p class="font-bold text-slate-900">드리퍼: 하리오 스위치 200 세라믹</p>
+                  <p class="text-slate-500">열 보존이 좋으며 스위치 On/Off로 완벽 맛 조절 가능</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white p-2.5 rounded border-2 border-black">
+                <span class="text-xl">⚖️</span>
+                <div class="text-[11px]">
+                  <p class="font-bold text-slate-900">필수템: 브루소(Brewso) 저울</p>
+                  <p class="text-slate-500">반응 속도가 대단히 빨라 칼타이밍 푸어 통제 가능 [Page 11]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border-2 border-black p-3.5 rounded-xl mt-6">
+            <span class="bg-red-500 text-white font-black text-[9px] px-2 py-0.5 rounded border border-black uppercase">바리스타 총평</span>
+            <p class="text-[11px] font-semibold text-slate-700 mt-1.5">"연습하다 물 조절 실패해도 침출식으로 닫아버리면 절대 쓴맛 안 납니다!" [Page 8]</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 공통 악세사리의 기적 -->
+      <div class="bg-yellow-100 border-4 border-black p-6 rounded-2xl shadow-brutal">
+        <h4 class="text-base font-black text-slate-950 flex items-center gap-2 mb-4">
+          <span class="text-xl">⚙️</span>
+          <span>돈 낭비를 완전히 막아주는 공통 마스터피스</span>
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-semibold">
+          <div class="bg-white p-4 rounded-xl border-2 border-black">
+            <span class="bg-black text-white text-[10px] px-2 py-0.5 rounded font-mono block w-max mb-2">드립포트</span>
+            <p class="text-slate-900 font-bold">모던리브 드립포트 (500ml 이상) [Page 9]</p>
+            <p class="text-slate-600 mt-1 text-[11px]">뚜껑에 천연나무 손잡이가 탑재되어 화상을 입지 않습니다. 만약 가성비 우선주의라면 '칼딘' 모델도 훌륭한 선택지입니다.</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border-2 border-black">
+            <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded font-mono block w-max mb-2">필수 밸브</span>
+            <p class="text-slate-900 font-bold">만드리테크 물줄기 조절 밸브 [Page 10]</p>
+            <p class="text-slate-600 mt-1 text-[11px]"><strong>이 가이드북 최고의 비책.</strong> 포트 입구에 쏙 끼우면 아무렇게나 쏟아부어도 졸졸졸 황금 굵기로 미세 조절을 강제합니다.</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border-2 border-black">
+            <span class="bg-black text-white text-[10px] px-2 py-0.5 rounded font-mono block w-max mb-2">온도계</span>
+            <p class="text-slate-900 font-bold">다이소/쿠팡 저가형 탐침 온도계 [Page 12]</p>
+            <p class="text-slate-600 mt-1 text-[11px]">3~5천 원짜리면 무조건 합격입니다. 브랜드 필요 없습니다. 물의 온도 1도를 잡는 바지런함이 명품 커피를 탄생시킵니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: INTERACTIVE BREWING CALCULATOR & DRIP SIMULATOR -->
+    <section class="print-page bg-white rounded-2xl border-4 border-black p-6 md:p-8 shadow-brutal-lg space-y-10">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3 py-1 rounded-full shadow-brutal-sm inline-block">Real-time Brewing Engine</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">스마트 실시간 브루잉 계산기 &amp; 비주얼 시뮬레이터</h2>
+        <p class="text-slate-600 text-xs font-semibold">내 원두 상태에 맞추어 그라인더 분쇄도 팁과 물양, 온도값을 실시간 계산하고 물줄기를 가상 작동시킵니다. [Page 16-19]</p>
+      </div>
+
+      <!-- 시뮬레이터 패널 -->
+      <div class="bg-coffee-50 p-6 rounded-2xl border-4 border-black shadow-brutal grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- 컨트롤러 영역 (4칸) -->
+        <div class="lg:col-span-5 space-y-5">
+          <div class="no-print">
+            <label class="block text-xs font-black text-slate-800 mb-1">1. 원두의 볶음도 (배전도) [Page 17]</label>
+            <select id="calc-roast" onchange="calculateRecipe()" class="w-full text-xs font-bold border-2 border-black rounded-lg p-3 bg-white focus:outline-none focus:bg-yellow-50">
+              <option value="light">약배전 (향긋한 꽃향, 에티오피아 계열) [92~98℃]</option>
+              <option value="medium" selected>중배전 (밸런스형, 일반 고소함) [90~94℃]</option>
+              <option value="dark">강배전 (스타벅스형, 쌉싸름한 카카오) [88~92℃]</option>
+            </select>
+          </div>
+
+          <div class="no-print">
+            <label class="block text-xs font-black text-slate-800 mb-1">2. 원하는 잔 수 [Page 17]</label>
+            <select id="calc-servings" onchange="calculateRecipe()" class="w-full text-xs font-bold border-2 border-black rounded-lg p-3 bg-white focus:outline-none focus:bg-yellow-50">
+              <option value="1">1인분 치트키 추출</option>
+              <option value="2">2인분 대용량 추출 (칼리타 185 전용)</option>
+            </select>
+          </div>
+
+          <div class="bg-white border-2 border-black p-4 rounded-xl">
+            <p class="text-xs font-black text-slate-950">그라인더 굵기 절대 원칙  깨소금 [Page 15]</p>
+            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              3~5만 원짜리 수동 핸드밀은 원두를 마구 짓이겨 대량의 미분을 만듭니다. 
+              그라인더에 수십만 원 쓰기 전엔 차라리 단골 로스터리에 가셔서 <strong>"일반 드립보다 굵고 깨소금 형태(1,150~1,350µm)로 갈아주세요"</strong> 라고 주문하세요. 이것만 해도 쓴맛 절반 이상 사라집니다. [Page 16]
+            </p>
+          </div>
+        </div>
+
+        <!-- 시뮬레이터 비주얼 그래픽 및 수치보드 (7칸) -->
+        <div class="lg:col-span-7 bg-white rounded-xl border-4 border-black p-5 flex flex-col justify-between shadow-brutal-sm">
+          
+          <!-- 상단 수치 정보 디스플레이 -->
+          <div class="grid grid-cols-3 gap-2 border-b-2 border-black pb-4 text-center">
+            <div class="bg-amber-50 p-2 rounded border border-black">
+              <span class="text-[9px] text-slate-500 block uppercase font-bold">필요 원두 무게</span>
+              <span id="res-coffee" class="text-xl sm:text-2xl font-black text-coffee-800">20g</span>
+              <span id="res-spoon" class="text-[10px] text-slate-600 block">약 2스푼</span>
+            </div>
+            <div class="bg-red-50 p-2 rounded border border-black">
+              <span class="text-[9px] text-slate-500 block uppercase font-bold">추천 온도</span>
+              <span id="res-temp" class="text-base sm:text-xl font-black text-red-600">90℃~94℃</span>
+              <span class="text-[9px] text-slate-400 block">탐침온도계 확인</span>
+            </div>
+            <div class="bg-blue-50 p-2 rounded border border-black">
+              <span class="text-[9px] text-slate-500 block uppercase font-bold">총 추출 유입수</span>
+              <span id="res-water" class="text-base sm:text-xl font-black text-blue-600">100g</span>
+              <span class="text-[9px] text-slate-400 block">에센스 전용</span>
+            </div>
+          </div>
+
+          <!-- 가상 브루잉 물줄기 애니메이션 패널 -->
+          <div class="my-4 p-4 bg-slate-50 rounded-lg border-2 border-black flex flex-col items-center justify-center min-h-[140px] relative overflow-hidden">
+            <div class="flex items-center gap-8 z-10">
+              <!-- 주전자 아이콘 -->
+              <div class="flex flex-col items-center">
+                <span class="text-3xl animate-pulse">🫖</span>
+                <span class="text-[9px] text-slate-500 mt-1">포트 투입</span>
+              </div>
+              
+              <!-- 추출 기둥 및 애니메이션 물방울 -->
+              <div class="relative w-12 h-16 flex justify-center">
+                <div class="w-1 bg-blue-300 h-full absolute opacity-30"></div>
+                <!-- 낙하 물방울 -->
+                <div class="w-3 h-3 bg-blue-500 rounded-full drip-animation absolute top-0"></div>
+                <!-- 드리퍼 내부 원두층 -->
+                <div class="absolute bottom-0 w-10 h-4 bg-amber-800 rounded-sm flex items-center justify-center text-[8px] text-white font-mono font-bold">원두층</div>
+              </div>
+
+              <!-- 서버 아이콘 -->
+              <div class="flex flex-col items-center">
+                <span class="text-3xl">🏺</span>
+                <span id="dripped-status" class="text-[9px] text-green-700 font-bold mt-1">에센스 받는중</span>
+              </div>
+            </div>
+            <span class="absolute bottom-1 right-2 text-[9px] text-slate-400 font-bold">Visual Brewing Simulator</span>
+          </div>
+
+          <!-- 추출 가이드 세션 -->
+          <div class="space-y-2 text-xs">
+            <h4 class="font-black text-slate-800">📌 Type A 1인분 기적의 추출 시퀀스 [Page 18]</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div class="p-2 rounded bg-amber-50 border border-slate-300">
+                <p class="font-bold text-[10px]">1단계: 뜸 들이기</p>
+                <p class="text-slate-500 text-[10px] mt-0.5">0:00~0:40초 대기</p>
+                <p id="step-1" class="font-black text-coffee-800 mt-1">물 30g</p>
+              </div>
+              <div class="p-2 rounded bg-amber-50 border border-slate-300">
+                <p class="font-bold text-[10px]">2단계: 본 추출</p>
+                <p class="text-slate-500 text-[10px] mt-0.5">0:40~2:00초 완성</p>
+                <p id="step-2" class="font-black text-coffee-800 mt-1">물 70g</p>
+              </div>
+              <div class="p-2 rounded bg-yellow-100 border-2 border-black">
+                <p class="font-black text-[10px] text-slate-950">3단계: 에센스 획득</p>
+                <p class="text-slate-500 text-[10px] mt-0.5">즉각 드리퍼 폐기!</p>
+                <p id="step-3" class="font-black text-red-700 mt-1">에센스 약 60~90ml</p>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-tight">※ 주의: 2분이 넘으면 맛없는 후반 쓴맛과 미분이 모두 떨어집니다. 가차없이 남은 물을 버려주는 것이 실패 없는 비법입니다. [Page 19]</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE 5: THREE CHAMPIONS' RECIPE CARDS (테츠 카스야, 아이스 4-8-8, 제임스 호프만 침출법) -->
+    <section class="print-page bg-white rounded-2xl border-4 border-black p-6 md:p-8 shadow-brutal-lg space-y-8">
+      <div class="border-b-4 border-black pb-6 text-center space-y-2">
+        <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3 py-1 rounded-full shadow-brutal-sm inline-block">Chapter 04 &amp; 05</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">월드 챔피언들의 비법 추출 포스터</h2>
+        <p class="text-slate-600 text-xs font-semibold">바리스타 리그 챔피언들과 월드 거장들의 완벽 검증된 드리퍼별 황금 공식 컬렉션 [Page 21-24]</p>
+      </div>
+
+      <!-- 3단 그리드 카드 레시피 -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Recipe 1: Tetsu Kasuya -->
+        <div class="border-4 border-black rounded-xl p-4 bg-amber-50/50 flex flex-col justify-between shadow-brutal space-y-4">
+          <div>
+            <div class="flex justify-between items-start">
+              <span class="bg-slate-950 text-white text-[9px] font-black px-2 py-0.5 rounded">TETSU 2025</span>
+              <span class="text-[10px] text-slate-500 font-bold">HOT 전용 [Page 21]</span>
+            </div>
+            <h3 class="text-lg font-black text-slate-950 mt-2">테츠 카스야 챔피언 레시피</h3>
+            <p class="text-[11px] text-slate-600 mt-1">원두 20g / 물 300g (하리오 스위치 필수). 후반부에 찬물을 섞어 극강의 단맛 유도.</p>
+            
+            <div class="space-y-1.5 mt-4 text-[10px] border-t-2 border-dashed border-slate-300 pt-3">
+              <p><strong>• 0:00 (닫기):</strong> 90℃ 물 40g 붓고 뜸 들이기</p>
+              <p><strong>• 0:40 (열기):</strong> 스위치 개방한 채 80g 주입</p>
+              <p><strong>• 1:30 (열림):</strong> 80g 붓기 직후, 주전자에 찬물 200g 섞어 온도 70℃ 급다운!</p>
+              <p><strong>• 2:10 (닫기):</strong> 차가워진 물 100g 부어 스팀 억제</p>
+              <p><strong>• 2:45 (열기):</strong> 한 번에 쭉 빼고 즉각 추출 완료</p>
+            </div>
+          </div>
+          <div class="bg-white p-2.5 rounded border border-black text-[10px] text-slate-500">
+            <strong>💡 비책:</strong> 찬물 투입으로 추출 온도를 내리면 원두의 쓴맛만 골라서 방지할 수 있습니다. [Page 21]
+          </div>
+        </div>
+
+        <!-- Recipe 2: ICE 4-8-8 -->
+        <div class="border-4 border-black rounded-xl p-4 bg-sky-50 flex flex-col justify-between shadow-brutal space-y-4">
+          <div>
+            <div class="flex justify-between items-start">
+              <span class="bg-blue-600 text-white text-[9px] font-black px-2 py-0.5 rounded border border-black">ICE 4-8-8</span>
+              <span class="text-[10px] text-slate-500 font-bold">ICE 전용 [Page 22]</span>
+            </div>
+            <h3 class="text-lg font-black text-slate-950 mt-2">조지 &amp; 김승백 4-8-8 공식</h3>
+            <p class="text-[11px] text-slate-600 mt-1">원두 20g / 물 200g. 얼음 위로 원액을 즉시 떨어트려 향기를 완벽 급랭 보존.</p>
+            
+            <div class="space-y-1.5 mt-4 text-[10px] border-t-2 border-dashed border-slate-300 pt-3">
+              <p><strong>• 사전 단계:</strong> 스위치 닫고 80g 부어 드리퍼 예열 후 물 버리기</p>
+              <p><strong>• 0:00 (닫기):</strong> 95℃ 고온 온수 40g 강한 부음</p>
+              <p><strong>• 0:40 (열기):</strong> 부드럽게 원을 그리며 80g 서클 푸어</p>
+              <p><strong>• 1:10 (열림):</strong> 중앙 집중형으로 80g 센터 푸어</p>
+              <p><strong>• 2:10 (종료):</strong> 추출액 전부를 가득 찬 얼음컵에 직배송</p>
+            </div>
+          </div>
+          <div class="bg-white p-2.5 rounded border border-black text-[10px] text-slate-500">
+            <strong>💡 비책:</strong> 서버 내부에서 얼음을 녹이면 절대 안 됩니다. 반드시 급랭(Chilling)잔을 따로 준비하세요. [Page 23]
+          </div>
+        </div>
+
+        <!-- Recipe 3: James Hoffmann -->
+        <div class="border-4 border-black rounded-xl p-4 bg-emerald-50/50 flex flex-col justify-between shadow-brutal space-y-4">
+          <div>
+            <div class="flex justify-between items-start">
+              <span class="bg-emerald-800 text-white text-[9px] font-black px-2 py-0.5 rounded border border-black">HOFFMANN</span>
+              <span class="text-[10px] text-slate-500 font-bold">심폐소생술 [Page 24]</span>
+            </div>
+            <h3 class="text-lg font-black text-slate-950 mt-2">제임스 호프만 침출 비법</h3>
+            <p class="text-[11px] text-slate-600 mt-1">원두 20g / 뜨거운 물 300g. 아무리 연습해도 유속 통제가 불가능한 망친 손을 위한 최종 심폐소생.</p>
+            
+            <div class="space-y-1.5 mt-4 text-[10px] border-t-2 border-dashed border-slate-300 pt-3">
+              <p><strong>• 0:00:</strong> 스위치를 완전히 닫습니다.</p>
+              <p><strong>• 0:05:</strong> 끓는 뜨거운 물 300g을 먼저 붓습니다.</p>
+              <p><strong>• 0:15:</strong> 굵게 간 원두 20g을 뒤늦게 그 위에 투입!</p>
+              <p><strong>• 0:30:</strong> 스푼으로 원두가 잘 섞이도록 3~4번 휘젓기</p>
+              <p><strong>• 3:00~4:00:</strong> 그대로 가만히 기다린 후 스위치 개방!</p>
+            </div>
+          </div>
+          <div class="bg-white p-2.5 rounded border border-black text-[10px] text-slate-500">
+            <strong>💡 비책:</strong> 물을 먼저 넣고 원두를 나중에 넣어야 원두층이 막히는 것을 막아 부드럽게 우려집니다. [Page 24]
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE 6: 맛의 나침반 (인터랙티브 응급 처방) & 보증 로스터리 지도 -->
+    <section class="print-page bg-white rounded-2xl border-4 border-black p-6 md:p-8 shadow-brutal-lg space-y-10">
+      <div class="border-b-4 border-black pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
+        <div>
+          <span class="bg-red-400 text-black border-2 border-black font-black text-xs px-3 py-1 rounded-full shadow-brutal-sm inline-block mb-2">Chapter 06 &amp; 07</span>
+          <h2 class="text-2xl md:text-3xl font-black text-slate-950">자가 진단 처방 보드 &amp; 추천 원두 지도</h2>
+          <p class="text-slate-600 text-xs font-semibold">잘못 추출된 커피의 맛을 단 1단계 조절로 처단하는 비법 및 사기 없는 인생 원두샵 [Page 31-41]</p>
+        </div>
+      </div>
+
+      <!-- 인터랙티브 파트: 자가 진단 나침반 -->
+      <div class="print-no-break border-4 border-black rounded-xl p-5 bg-yellow-50 shadow-brutal">
+        <h3 class="text-sm font-black text-slate-950 mb-3 flex items-center gap-1.5">
+          <span>🧭 맛 나침반 시뮬레이터</span>
+          <span class="text-[9px] bg-black text-yellow-300 px-2 py-0.5 rounded">맛 버튼을 클릭하세요!</span>
+        </h3>
+        <div class="flex gap-2 mb-4 no-print">
+          <button onclick="toggleCompass('bitter')" id="btn-comp-bitter" class="flex-1 py-2 px-3 rounded border-2 font-black text-xs transition-all text-red-700 bg-red-50 border-red-500 shadow-brutal-sm">
+            💥 맛이 너무 쓰고 떫음 (과다 추출)
+          </button>
+          <button onclick="toggleCompass('sour')" id="btn-comp-sour" class="flex-1 py-2 px-3 rounded border-2 font-black text-xs transition-all text-slate-400 bg-white border-slate-200">
+            🍋 맛이 시고 밍밍함 (과소 추출)
+          </button>
+        </div>
+
+        <div class="bg-white border-2 border-black p-4 rounded-lg">
+          <div id="compass-title-box" class="mb-4">
+            <!-- 동적으로 타이틀 갱신 -->
+          </div>
+
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 border-b-2 border-black">
+                  <th class="p-2 font-bold text-slate-800">조절 요소</th>
+                  <th class="p-2 font-bold text-slate-800">원인 지목 [Page 32]</th>
+                  <th class="p-2 font-black text-red-600 bg-red-50/50">즉시 처방 가이드 [Page 34]</th>
+                </tr>
+              </thead>
+              <tbody id="compass-tbody">
+                <!-- 동적으로 추가됨 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15년 차 검증 완료 명품 로스터리 카탈로그 -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-black text-slate-950 flex items-center gap-2">
+          <span>🛒 곰팡이/벌레 먹은 불량두 피하기 - 15년차 인생 생두 보증처 [Page 37]</span>
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <!-- 1. 리브레 -->
+          <div class="p-4 rounded-xl border-2 border-black bg-orange-50 shadow-brutal-sm">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-black text-slate-950">커피 리브레</span>
+              <span class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded font-mono">박이추사단</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              서필훈 대표의 철학이 담긴 완벽 스페셜티. 품질 가이드에 맞지 않으면 생두를 통째로 폐기하는 무서운 소신. 고소한 중강배전 최강자. [Page 38]
+            </p>
+          </div>
+          <!-- 2. 프릳츠 -->
+          <div class="p-4 rounded-xl border-2 border-black bg-blue-50 shadow-brutal-sm">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-black text-slate-950">프릳츠 커피 컴퍼니</span>
+              <span class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded font-mono">국가대표</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              김병기 대표와 국가대표 바리스타들이 설계한 최고의 한국형 풍미 조율처. 대중적인 기분 좋은 단맛과 선물용 브랜딩 명가. [Page 39]
+            </p>
+          </div>
+          <!-- 3. 토치커피 -->
+          <div class="p-4 rounded-xl border-2 border-black bg-emerald-50 shadow-brutal-sm">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-black text-slate-950">토치커피 &amp; 시그니쳐</span>
+              <span class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded font-mono">꽃향기</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              과일 주스나 꽃향기가 풍겨오는 아주 매력적인 약배전 로스팅 1위. 10년간 단 한 번도 풋내와 탄 맛을 낸 적 없는 신뢰의 대표처. [Page 41]
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 인쇄 푸터 정보 -->
+      <div class="border-t-4 border-black pt-6 text-center text-[10px] text-slate-400 font-bold">
+        <p>본 포스터 가이드는 유튜브 &lt;커피 브루잉 다이어리&gt; 양지원 마스터의 15년 홈카페 비법서 ver7 정식 콘텐츠입니다.</p>
+        <p class="mt-1 font-mono uppercase tracking-widest">© COFFEE BREWING DIARY. POWERED BY YANGBARI.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 1. 레시피 계산기 연산 로직
+    function calculateRecipe() {
+      const roast = document.getElementById('calc-roast').value;
+      const servings = parseInt(document.getElementById('calc-servings').value);
+
+      let coffeeGrams = 20;
+      let spoonInfo = "가득 약 2스푼";
+      let tempRange = "90℃ ~ 94℃";
+      let waterAmount = 70;
+      let step1Water = 30;
+
+      // 원두 배전도 세팅
+      if (roast === 'light') {
+        coffeeGrams = servings === 1 ? 25 : 50;
+        spoonInfo = servings === 1 ? "수북이 약 2.5스푼" : "수북이 약 5스푼";
+        tempRange = "92℃ ~ 98℃";
+      } else { // medium, dark
+        coffeeGrams = servings === 1 ? 20 : 40;
+        spoonInfo = servings === 1 ? "깎아서 약 2스푼" : "깎아서 약 4스푼";
+        tempRange = roast === 'dark' ? "88℃ ~ 92℃" : "90℃ ~ 94℃";
+      }
+
+      // 인원수에 따른 물양 스케일링
+      if (servings === 2) {
+        step1Water = 60;
+        waterAmount = 140;
+      } else {
+        step1Water = 30;
+        waterAmount = 70;
+      }
+
+      // UI 업데이트
+      document.getElementById('res-coffee').innerText = `${coffeeGrams}g`;
+      document.getElementById('res-spoon').innerText = spoonInfo;
+      document.getElementById('res-temp').innerText = tempRange;
+      document.getElementById('res-water').innerText = `${waterAmount}g (누적 ${step1Water + waterAmount}g)`;
+      
+      document.getElementById('step-1').innerText = `물 ${step1Water}g 주입`;
+      document.getElementById('step-2').innerText = `물 ${waterAmount}g 천천히 주입`;
+      document.getElementById('step-3').innerText = `에센스 약 ${servings === 1 ? '60~90ml' : '120~180ml'} 수득`;
+    }
+
+    // 2. 맛의 나침반 인터랙티브 데이터 및 토글 로직
+    const compassData = {
+      bitter: {
+        title: "⚠️ 과다 추출(Over-Extraction) 분석",
+        desc: "원두 성분을 온수가 너무 무지막지하게 다 녹여내서 갈증을 유발하고 쓴맛이 뒤덮인 상태입니다. [Page 31]",
+        rows: [
+          { name: "물 온도 제어", current: "너무 뜨거움 🔥", action: "현재 온도에서 <strong>2~3도 내려서</strong> 부드럽게 추출하세요. [Page 34]" },
+          { name: "분쇄 굵기 제어", current: "소금처럼 너무 고움 🧂", action: "그라인더 바퀴를 조절해 <strong>깨소금 크기로 굵게</strong> 변경하세요. [Page 34]" },
+          { name: "추출 시간 제어", current: "2분이 넘어가며 원두를 우려댐 ⏳", action: "미련 없이 <strong>2분 안에 추출을 마쳐서</strong> 드리퍼를 버리세요. [Page 34]" },
+          { name: "푸어 횟수 제어", current: "6~7회에 걸쳐 사정없이 나눔 🌊", action: "나눠 붓는 횟수를 <strong>2~3회로 간소화</strong>하여 용매 정체를 막으세요." }
+        ]
+      },
+      sour: {
+        title: "🍋 과소 추출(Under-Extraction) 분석",
+        desc: "커피 고유의 풍성한 단맛과 아로마가 물에 충분히 풀리기 전에 너무 급히 끝나 시큼하고 풋내가 돕니다. [Page 31]",
+        rows: [
+          { name: "물 온도 제어", current: "물 온도가 미지근함 (90도 미만) ❄️", action: "물이 충분한 힘을 내게 <strong>93~95도로 높여</strong> 드립하세요. [Page 35]" },
+          { name: "분쇄 굵기 제어", current: "조약돌마냥 너무 굵음 🪨", action: "원두 표면적에 골고루 닿게 <strong>한 단계 가늘게</strong> 갈아주세요. [Page 35]" },
+          { name: "추출 시간 제어", current: "뜸 들이기도 없이 1분 만에 끝남 ⏳", action: "뜸 시간 40초를 <strong>절대 사수</strong>하고 차분히 유속을 늦추세요." },
+          { name: "푸어 횟수 제어", current: "한 번에 들이붓고 멈춤 💧", action: "물줄기를 더 <strong>여럿 나눠 부어</strong> 새로운 추출 용매를 추가하세요." }
+        ]
+      }
+    };
+
+    function toggleCompass(type) {
+      const isBitter = type === 'bitter';
+      const activeBtn = document.getElementById(isBitter ? 'btn-comp-bitter' : 'btn-comp-sour');
+      const inactiveBtn = document.getElementById(isBitter ? 'btn-comp-sour' : 'btn-comp-bitter');
+
+      // 버튼 클래스 갱신 (뉴브루탈리즘 스타일)
+      activeBtn.className = `flex-1 py-2 px-3 rounded border-2 font-black text-xs transition-all ${isBitter ? 'text-red-700 bg-red-100 border-black shadow-brutal-sm' : 'text-amber-900 bg-amber-100 border-black shadow-brutal-sm'}`;
+      inactiveBtn.className = "flex-1 py-2 px-3 rounded border-2 font-black text-xs transition-all text-slate-400 bg-white border-slate-200 shadow-none";
+
+      // 타이틀 바 업데이트
+      const targetData = compassData[type];
+      const titleBox = document.getElementById('compass-title-box');
+      titleBox.innerHTML = `
+        <h4 class="font-black text-sm ${isBitter ? 'text-red-900' : 'text-amber-900'} flex items-center gap-1.5">
+          <span>${targetData.title}</span>
+        </h4>
+        <p class="text-[10px] text-slate-500 mt-1">${targetData.desc}</p>
+      `;
+
+      // 테이블 구조물 업데이트
+      const tbody = document.getElementById('compass-tbody');
+      tbody.innerHTML = '';
+      targetData.rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = "border-b border-slate-200 hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-2 font-bold text-slate-800 text-[11px]">${row.name}</td>
+          <td class="p-2 text-slate-500 text-[10px] font-medium">${row.current}</td>
+          <td class="p-2 ${isBitter ? 'bg-red-50/30 text-red-800' : 'bg-amber-50/30 text-amber-800'} font-semibold text-[11px]">${row.action}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 로드 즉시 시뮬레이션 적용
+    window.onload = function() {
+      calculateRecipe();
+      toggleCompass('bitter');
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>브루잉 마스터 2.0 - 스마트 브루잉 가이드북</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f1f5f9; /* Slate 100 */
+        }
+        .serif-font {
+            font-family: 'Playfair Display', 'Noto Sans KR', serif;
+        }
+        /* A4 인쇄 가이드 스타일 정의 */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #0f172a !important;
+                font-size: 12px;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            /* 1단계 컨테이너 및 결과 카드들을 인쇄 시 흰 배경과 실선으로 최적화 */
+            .print-card, section {
+                page-break-inside: avoid;
+                background-color: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
+                box-shadow: none !important;
+                margin-bottom: 20px !important;
+                border-radius: 12px !important;
+                padding: 20px !important;
+            }
+            /* A4 가로폭에 맞추어 레이아웃을 평평하게 정렬하여 잘림 방지 */
+            #recipePrintArea {
+                display: block !important;
+            }
+            .lg:col-span-2, .space-y-6 {
+                width: 100% !important;
+                display: block !important;
+            }
+            .space-y-6 > * {
+                margin-bottom: 20px !important;
+            }
+            /* 인쇄 시 폼 컨트롤(Select) 테두리 가독성 확보 */
+            select {
+                background-color: #f8fafc !important;
+                color: #0f172a !important;
+                border: 1px solid #94a3b8 !important;
+                appearance: none !important;
+                padding: 8px 12px !important;
+                font-weight: 600 !important;
+            }
+            /* 전반적인 다크 톤 인프라 컬러를 라이트 톤으로 반전 */
+            h1, h2, h3, h4, span, p, label, strong {
+                color: #0f172a !important;
+            }
+            .text-white {
+                color: #0f172a !important;
+            }
+            .text-emerald-400, .text-emerald-300, .text-emerald-200 {
+                color: #047857 !important; /* Emerald 700 */
+            }
+            .text-amber-400, .text-amber-300, .text-amber-200 {
+                color: #b45309 !important; /* Amber 700 */
+            }
+            .text-slate-400, .text-slate-500 {
+                color: #475569 !important; /* Slate 600 */
+            }
+            .bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-slate-950\/40, .bg-slate-950\/50, .bg-slate-950\/60, .bg-emerald-950\/20 {
+                background-color: #f8fafc !important;
+                border-color: #cbd5e1 !important;
+                color: #0f172a !important;
+            }
+            /* 드리퍼 선택 카드 인쇄 디자인 (선택됨 vs 선택안됨 분리) */
+            #dripper-kalita, #dripper-switch, #dripper-v60 {
+                background-color: #f8fafc !important;
+                border: 1px dashed #cbd5e1 !important;
+                opacity: 0.5 !important;
+            }
+            /* 활성화된 드리퍼 카드 가시성 집중 */
+            .border-emerald-400 {
+                border: 2px solid #047857 !important;
+                background-color: #ecfdf5 !important;
+                opacity: 1 !important;
+                font-weight: bold !important;
+            }
+            /* 활성화된 필터 칩 인쇄 스타일 */
+            .bg-emerald-500\/20 {
+                background-color: #ecfdf5 !important;
+                border: 1.5px solid #047857 !important;
+                color: #065f46 !important;
+            }
+            .bg-amber-500\/20 {
+                background-color: #fffbef !important;
+                border: 1.5px solid #b45309 !important;
+                color: #78350f !important;
+            }
+            /* 비활성 필터 칩 스타일 */
+            .bg-slate-800 {
+                background-color: #f1f5f9 !important;
+                border: 1px solid #e2e8f0 !important;
+                color: #64748b !important;
+            }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2s infinite;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.95; transform: scale(0.98); }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-3 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- 헤더 및 탑바 (인쇄 비대상 포함) -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-6 mb-8 gap-4">
+            <div>
+                <span class="text-xs uppercase tracking-widest text-emerald-400 font-bold">Coffee Brewing Diary Cookbook ver7</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-white serif-font mt-1">BREWING MASTER 2.0</h1>
+                <p class="text-sm text-slate-400 mt-1">15년 차 양지원 바리스타 노하우 x 드리퍼 맞춤형 하이브리드 가이드</p>
+            </div>
+            <button onclick="window.print()" class="no-print bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-lg transition-all duration-150 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                레시피 인쇄하기 (A4 가이드)
+            </button>
+        </header>
+
+        <!-- 제어판 (no-print 클래스를 제거하여 전체 인쇄 가능 영역으로 확보) -->
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-8 shadow-xl">
+            <h2 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                <span class="inline-block w-2.5 h-2.5 bg-emerald-400 rounded-full"></span>
+                1단계: 나만의 브루잉 환경 입력 및 조절 변수 설정
+            </h2>
+
+            <!-- 추출 필수 물리적 환경 설정 -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+                <!-- 원두 로스팅 선택 -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">원두 로스팅 상태</label>
+                    <select id="roastLevel" onchange="calculateBrewing()" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="light" selected>약배전 (밝은 갈색, 과일산미)</option>
+                        <option value="medium">중배전 (중간 갈색, 밸런스)</option>
+                        <option value="dark">강배전 (어두운 색, 딥초콜릿)</option>
+                    </select>
+                </div>
+
+                <!-- 원하는 용량 -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">원하는 용량 (인분)</label>
+                    <select id="servings" onchange="calculateBrewing()" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="1" selected>1인분 (약 120ml ~ 180ml 음용)</option>
+                        <option value="2">2인분 (약 320ml ~ 510ml 음용)</option>
+                    </select>
+                </div>
+
+                <!-- 핫/아이스 -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">온도 타입 (Hot / Ice)</label>
+                    <select id="tempType" onchange="calculateBrewing()" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="hot" selected>따뜻하게 (HOT)</option>
+                        <option value="ice">시원하게 (ICE)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 드리퍼 선택 카드 섹션 -->
+            <div class="border-t border-slate-800 pt-5 mb-6">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">사용 중인 드리퍼 선택 (유속 및 성향 맞춤형)</label>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- 칼리타 웨이브 -->
+                    <button id="dripper-kalita" onclick="selectDripper('kalita')" class="text-left p-4 rounded-xl border transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Type A: 결과주의</span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">초보 강력 추천</span>
+                            </div>
+                            <h3 class="text-sm font-bold text-white mb-1">칼리타 웨이브 (Kalita Wave)</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">바닥이 평평하고 미세 홀이 3개 있어, 대충 물을 부어도 일정한 편차 없이 황금 단맛을 보장합니다. (PDF p.7)</p>
+                        </div>
+                    </button>
+                    <!-- 하리오 스위치 -->
+                    <button id="dripper-switch" onclick="selectDripper('switch')" class="text-left p-4 rounded-xl border transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Type B: 성장주의</span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400">하이브리드</span>
+                            </div>
+                            <h3 class="text-sm font-bold text-white mb-1">하리오 스위치 (Hario Switch)</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">스위치 밸브로 물을 가둘 수 있습니다. 침출/침합식을 믹스해 실패 확률을 0%에 수렴시킵니다. (PDF p.8)</p>
+                        </div>
+                    </button>
+                    <!-- 하리오 V60 -->
+                    <button id="dripper-v60" onclick="selectDripper('v60')" class="text-left p-4 rounded-xl border transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Type C: 프로페셔널</span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-red-500/10 border border-red-500/20 text-red-400">물줄기 제어 필요</span>
+                            </div>
+                            <h3 class="text-sm font-bold text-white mb-1">하리오 V60 (Hario V60)</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">유속이 아주 빨라 초보자는 채널링이 생기기 쉽지만, 완벽히 내렸을 때 극상의 맑은 과일 산미를 냅니다. (PDF p.5)</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 스마트 맛 보정 자가진단 필터 칩 영역 -->
+            <div class="border-t border-slate-800 pt-5 mt-5">
+                <div class="flex items-center justify-between mb-3">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">직전 추출 피드백 및 맛 개선 요구사항 (다중 선택 가능)</label>
+                    <button onclick="resetChips()" class="text-[11px] text-slate-400 hover:text-emerald-400 transition-colors no-print">전체 초기화 ↺</button>
+                </div>
+                
+                <div class="flex flex-wrap gap-2.5">
+                    <!-- 황금 밸런스 칩 -->
+                    <button id="chip-perfect" onclick="toggleChip('perfect')" class="px-4 py-2.5 rounded-xl border text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm">
+                        <span id="icon-perfect">✨</span> 황금 밸런스 (이상적 비율)
+                    </button>
+                    <!-- 디펙트 피드백 칩들 -->
+                    <button id="chip-bitter" onclick="toggleChip('bitter')" class="px-4 py-2.5 rounded-xl border text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm">
+                        <span id="icon-bitter">➕</span> 너무 쓰고 텁텁함
+                    </button>
+                    <button id="chip-astringent" onclick="toggleChip('astringent')" class="px-4 py-2.5 rounded-xl border text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm">
+                        <span id="icon-astringent">➕</span> 떫은 맛 및 불쾌한 잡미
+                    </button>
+                    <button id="chip-sour" onclick="toggleChip('sour')" class="px-4 py-2.5 rounded-xl border text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm">
+                        <span id="icon-sour">➕</span> 식초처럼 시큼하고 튐
+                    </button>
+                    <button id="chip-weak" onclick="toggleChip('weak')" class="px-4 py-2.5 rounded-xl border text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm">
+                        <span id="icon-weak">➕</span> 바디가 너무 연하고 싱거움
+                    </button>
+                    <button id="chip-flat" onclick="toggleChip('flat')" class="px-4 py-2.5 rounded-xl border text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm">
+                        <span id="icon-flat">➕</span> 향미와 단맛 부족
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-5 p-3 bg-slate-950/50 rounded-xl border border-slate-850 text-xs text-slate-400">
+                💡 <span class="text-slate-300 font-semibold">동적 진단 가이드:</span> 칩을 터치하여 다중 선택 시, 내부 변수 처리 장치가 물 온도와 그라인더 눈금을 즉각 정밀 오프셋 연산하여 레시피 시트를 실시간 보정합니다. (PDF 맛의 나침반 p.31~35 반영)
+            </div>
+        </section>
+
+        <!-- 결과 리포트 및 인포그래픽 영역 (A4 인쇄용 출력 범위) -->
+        <div id="recipePrintArea" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- 왼쪽 2단 컬럼: 연산 결과 계량 및 레시피 카드 -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- 계량 연산 결과 판넬 -->
+                <div class="print-card bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 h-20 w-20 bg-emerald-500/5 rounded-full blur-xl"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-emerald-400">⚡</span> 마스터 실시간 브루잉 계산값
+                        </h2>
+                        <div class="flex gap-2">
+                            <span id="badgeDripper" class="badge-print px-2.5 py-1 rounded bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">칼리타 웨이브</span>
+                            <span id="badgeServing" class="badge-print px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-semibold">1인분 HOT</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-2 border-b border-slate-800 mb-4 text-center">
+                        <div>
+                            <span class="block text-slate-400 text-[11px] uppercase tracking-wider font-semibold">원두 무게</span>
+                            <span id="calcCoffee" class="text-xl font-bold text-white mt-1 block">25g</span>
+                            <span id="calcCoffeeScoop" class="text-[10px] text-slate-400 block mt-0.5">(가득 2.5스푼)</span>
+                        </div>
+                        <div>
+                            <span class="block text-slate-400 text-[11px] uppercase tracking-wider font-semibold">추출 수온</span>
+                            <span id="calcTemp" class="text-xl font-bold text-emerald-400 mt-1 block">94°C</span>
+                            <span id="tempDetail" class="text-[10px] text-slate-400 block mt-0.5">(수온조절 권장)</span>
+                        </div>
+                        <div>
+                            <span class="block text-slate-400 text-[11px] uppercase tracking-wider font-semibold">드리퍼 부을 물</span>
+                            <span id="calcWaterTotal" class="text-xl font-bold text-white mt-1 block">100ml</span>
+                            <span id="bypassNote" class="text-[10px] text-amber-400 block mt-0.5">우회 없음</span>
+                        </div>
+                        <div>
+                            <span class="block text-slate-400 text-[11px] uppercase tracking-wider font-semibold">최종 음용량</span>
+                            <span id="calcFinalVol" class="text-xl font-bold text-white mt-1 block">약 180ml</span>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">(얼음/가수 포함)</span>
+                        </div>
+                    </div>
+
+                    <!-- 그라인더 가이드 -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                        <div class="text-xs font-bold text-slate-300 mb-2 uppercase tracking-wide">그라인더 타겟 분쇄 규격 (드리퍼 계수 연동)</div>
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                                <span class="block text-[10px] text-slate-400">Comandante</span>
+                                <span id="grindComandante" class="text-xs font-bold text-white block mt-1">27 ~ 28 클릭</span>
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                                <span class="block text-[10px] text-slate-400">Mahlkönig EK43</span>
+                                <span id="grindEK" class="text-xs font-bold text-white block mt-1">13.5 ~ 14.5 다이얼</span>
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                                <span class="block text-[10px] text-slate-400">마이크론 (평균)</span>
+                                <span id="grindMicron" class="text-xs font-bold text-white block mt-1">1216 µm</span>
+                            </div>
+                        </div>
+                        <div id="grindSummaryNote" class="mt-2 text-[11px] text-slate-400">
+                            * 분쇄 눈대중: 프렌치 프레스보다 살짝 곱고 일반 드립보다 굵은 <strong class="text-slate-300">"깨소금 ~ 굵은 소금"</strong> 크기
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 세부 타임라인 레시피 카드 -->
+                <div class="print-card bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                    <h2 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                        <span class="text-emerald-400">📋</span> 실시간 동적 푸어링 프로토콜
+                    </h2>
+
+                    <!-- 타임라인 스텝 -->
+                    <div id="recipeSteps" class="space-y-4">
+                        <!-- JS가 계산하여 동적 스텝 삽입함 -->
+                    </div>
+
+                    <!-- 맛 보정 추가 전략 -->
+                    <div id="brewAdviceCard" class="mt-5 p-4 bg-emerald-950/20 rounded-xl border border-emerald-900/40 text-xs text-slate-300">
+                        <!-- JS에서 동적으로 맞춤 가이드 제시 -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 오른쪽 컬럼: 추천 원두, 하이브리드 추출 원리 및 장비 팁 -->
+            <div class="space-y-6">
+                <!-- 원두 로스팅에 매핑되는 로스터리 추천 -->
+                <div class="print-card bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                    <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <span class="text-emerald-400">☕</span> 추천 인생 원두 (PDF p.38~41 검증)
+                    </h2>
+                    <div id="recommendedBeans" class="space-y-4">
+                        <!-- 로스팅 단계에 맞추어 추천 원두 동적 갱신 -->
+                    </div>
+                </div>
+
+                <!-- 2인분 추출의 물리적 원리 및 장비 가이드 -->
+                <div class="print-card bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                    <h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <span class="text-emerald-400">💡</span> 핵심 추출 물리 요약
+                    </h2>
+                    <div id="physicalAdviceContainer" class="space-y-3 text-xs text-slate-300 leading-relaxed">
+                        <!-- 드리퍼 및 용량 타입에 맞추어 동적 팁 생성 -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 풋터 (no-print 클래스를 제거하여 하단 가이드 문구도 깔끔하게 보존) -->
+        <footer class="mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>본 가이드북은 유튜브 <커피 브루잉 다이어리> 양지원 저서 '실패 없는 홈카페 비법서 v7' 및 브루잉 세미나를 정적 과학 이론 데이터로 구현한 웹 서비스입니다.</p>
+            <p class="mt-1">© Coffee Brewing Diary. Designed for Master Brewers.</p>
+        </footer>
+    </div>
+
+    <!-- 브루잉 연산 로직 구현 스크립트 -->
+    <script>
+        // 원두 추천 데이터베이스 (PDF p.38~41 원본)
+        const beanDatabase = {
+            light: [
+                {
+                    roaster: "토치커피 (Torch Coffee)",
+                    product: "화려한 약배전 에티오피아 / 게이샤",
+                    desc: "꽃향기가 입 안 가득 터지고 자몽, 오렌지 주스 같은 화려한 과일 톤의 산미를 최고조로 볶아냅니다. (PDF p.41)"
+                },
+                {
+                    roaster: "시그니쳐 로스터스 (Signature Roasters)",
+                    product: "스페셜티 싱글오리진 셀렉션",
+                    desc: "과일 폭탄 같은 맛을 내며, 단 한 번도 설익은 풋내 없이 원두 고유의 개성을 극한으로 끌어내는 산미 맛집. (PDF p.41)"
+                },
+                {
+                    roaster: "모모스커피 (Momos Coffee)",
+                    product: "월드 챔피언 셀렉트 싱글오리진",
+                    desc: "세계 챔피언 전주연, 추경하 바리스타가 보증하며, 친절한 전용 추출 레시피 카드를 온라인으로 세세히 지원합니다. (PDF p.40)"
+                }
+            ],
+            medium: [
+                {
+                    roaster: "프릳츠 커피 컴퍼니 (Fritz)",
+                    product: "잘되어가시나 / 올드독 (Sweet)",
+                    desc: "단맛의 여운이 깊고 고소한 커피 어벤져스들의 합작 블렌딩 원두. 멀쩡한 원두도 기준 미달 시 전량 폐기하는 품질 고집. (PDF p.39)"
+                },
+                {
+                    roaster: "커피 리브레 (Coffee Libre)",
+                    product: "베드커피 (House Blend)",
+                    desc: "대한민국 1세대 거장 서필훈 대표의 장인 정신이 깃든 풍부한 단맛과 밀도 깊은 중배전 하우스 블렌딩. (PDF p.38)"
+                },
+                {
+                    roaster: "딥블루레이크 (Deep Blue Lake)",
+                    product: "딥 블렌딩 / 싱글 세팅",
+                    desc: "수천만 원 상당의 기계 선별 장비로 밀도가 약하거나 갈라진 결점두를 0%로 걸러내 소름 돋게 깨끗한 클린컵. (PDF p.40)"
+                }
+            ],
+            dark: [
+                {
+                    roaster: "커피 리브레 (Coffee Libre)",
+                    product: "다크 블렌드 (중강배전~강배전)",
+                    desc: "카카오 99%처럼 기분 나쁜 쓴맛이 아니라, 고소하고 묵직한 초콜릿 카라멜 풍미가 뿜어져 나오는 고소파 전용 원두. (PDF p.38)"
+                },
+                {
+                    roaster: "프릳츠 커피 컴퍼니 (Fritz)",
+                    product: "서울 시네마 (클래식 다크 블렌딩)",
+                    desc: "중후한 질감과 너티함, 우유와 섞어 전통 카페오레(라떼)로 만들었을 때 환상적인 밸런스를 자아내는 원두. (PDF p.39)"
+                }
+            ]
+        };
+
+        // 드리퍼 선택 상태 변수 (기본값: kalita)
+        let selectedDripperType = 'kalita';
+
+        // 멀티 셀렉트 칩 상태 관리 변수
+        const activeChips = {
+            perfect: true,
+            bitter: false,
+            astringent: false,
+            sour: false,
+            weak: false,
+            flat: false
+        };
+
+        // 드리퍼 선택 제어기
+        function selectDripper(dripperId) {
+            selectedDripperType = dripperId;
+            updateDripperUI();
+            calculateBrewing();
+        }
+
+        function updateDripperUI() {
+            const drippers = ['kalita', 'switch', 'v60'];
+            drippers.forEach(id => {
+                const button = document.getElementById(`dripper-${id}`);
+                if (id === selectedDripperType) {
+                    button.className = "text-left p-4 rounded-xl border border-emerald-400 bg-emerald-500/10 text-emerald-100 shadow-md transition-all scale-[1.01] duration-150";
+                } else {
+                    button.className = "text-left p-4 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:border-slate-700 transition-all duration-150";
+                }
+            });
+
+            // 우측 배지 업데이트용 텍스트 변조
+            const badge = document.getElementById('badgeDripper');
+            if (selectedDripperType === 'kalita') {
+                badge.innerText = "칼리타 웨이브";
+                badge.className = "badge-print px-2.5 py-1 rounded bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700";
+            } else if (selectedDripperType === 'switch') {
+                badge.innerText = "하리오 스위치";
+                badge.className = "badge-print px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-bold border border-amber-500/30";
+            } else {
+                badge.innerText = "하리오 V60";
+                badge.className = "badge-print px-2.5 py-1 rounded bg-red-500/10 text-red-400 text-xs font-bold border border-red-500/30";
+            }
+        }
+
+        // 필터 칩 토글 제어 함수
+        function toggleChip(chipId) {
+            if (chipId === 'perfect') {
+                // '황금 밸런스' 클릭 시 다른 문제점 칩 모두 비활성화
+                for (let key in activeChips) {
+                    activeChips[key] = (key === 'perfect');
+                }
+            } else {
+                // 다른 문제점 칩 클릭 시 '황금 밸런스'를 풀고 개별 칩 상태 반전
+                activeChips.perfect = false;
+                activeChips[chipId] = !activeChips[chipId];
+
+                // 만약 모든 문제점 칩이 해제되었다면 다시 '황금 밸런스'로 강제 복귀
+                let anyActive = false;
+                for (let key in activeChips) {
+                    if (key !== 'perfect' && activeChips[key]) {
+                        anyActive = true;
+                    }
+                }
+                if (!anyActive) {
+                    activeChips.perfect = true;
+                }
+            }
+            updateChipUI();
+            calculateBrewing();
+        }
+
+        // 전체 필터 칩 리셋
+        function resetChips() {
+            for (let key in activeChips) {
+                activeChips[key] = (key === 'perfect');
+            }
+            updateChipUI();
+            calculateBrewing();
+        }
+
+        // 칩 상태에 따른 활성/비활성 스타일 렌더러
+        function updateChipUI() {
+            const keys = Object.keys(activeChips);
+            keys.forEach(key => {
+                const button = document.getElementById(`chip-${key}`);
+                const icon = document.getElementById(`icon-${key}`);
+                
+                if (activeChips[key]) {
+                    if (key === 'perfect') {
+                        button.className = "px-4 py-2.5 rounded-xl border border-amber-400 bg-amber-500/20 text-amber-200 text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-md shadow-amber-500/10";
+                        icon.innerText = "✨";
+                    } else {
+                        button.className = "px-4 py-2.5 rounded-xl border border-emerald-400 bg-emerald-500/20 text-emerald-200 text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-md shadow-emerald-500/10";
+                        icon.innerText = "✓";
+                    }
+                } else {
+                    button.className = "px-4 py-2.5 rounded-xl border border-slate-750 bg-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-500 text-xs font-bold transition-all duration-150 flex items-center gap-1.5 shadow-sm";
+                    icon.innerText = "＋";
+                }
+            });
+        }
+
+        function calculateBrewing() {
+            const roast = document.getElementById('roastLevel').value;
+            const servings = document.getElementById('servings').value;
+            const tempType = document.getElementById('tempType').value;
+
+            // 기본 원두 물리 규격 바인딩 (PDF p.16~18 준수)
+            let coffeeGrams = 20;
+            let targetWaterTotal = 300;
+            let temp = 92;
+            let bypassGrams = 0;
+            let finalVol = "약 180ml";
+            let scoopText = "(가득 2스푼)";
+            
+            // 그라인더 분쇄 크기 baseline 설정 (µm 기준 눈금 매핑)
+            let baseMicron = 1216; // PDF p.16 핸드드립 표준 (깨소금 크기)
+
+            // 배전도(로스팅) 단계별 baseline 온도 및 분쇄도 할당
+            if (roast === 'light') {
+                temp = 94; // 약배전 고밀도 원두는 성분이 단단히 갇혀있어 높은 온도로 완벽하게 녹여냄
+                baseMicron = 1216;
+            } else if (roast === 'medium') {
+                temp = 92;
+                baseMicron = 1250;
+            } else if (roast === 'dark') {
+                temp = 89; // 강배전은 쓴맛(과다추출) 방지를 위해 다소 낮은 온도로 세팅
+                baseMicron = 1300;
+            }
+
+            // 드리퍼 종류별 분쇄도 보정 가중치
+            let dripperGrindOffset = 0;
+            if (selectedDripperType === 'v60') {
+                // V60은 유속이 매우 빠르므로, 충분한 접촉저항을 만들기 위해 미세하게 가늘게 세팅
+                dripperGrindOffset = -30; 
+            } else if (selectedDripperType === 'switch') {
+                // 스위치는 침출 시간이 포함되어 과다 추출을 막기 위해 약간 더 굵게 세팅
+                dripperGrindOffset = 40;
+            } // 칼리타는 기본 0 오프셋 적용
+
+            baseMicron += dripperGrindOffset;
+
+            // 인분(Servings) 수량에 따른 스케일업 및 우회(Bypass) 가이드 적용
+            if (servings === '1') {
+                if (roast === 'light') {
+                    coffeeGrams = 25; // 약배전 1인분은 충분한 바디를 위해 25g 도즈 권장
+                    scoopText = "(가득 2.5스푼)";
+                } else {
+                    coffeeGrams = 20;
+                }
+                
+                if (tempType === 'hot') {
+                    targetWaterTotal = 300;
+                    finalVol = "약 260ml";
+                } else { // 1인분 아이스
+                    targetWaterTotal = 200; // 1:10 고밀도 농축 에센스 추출 (MD 5.3)
+                    finalVol = "약 200ml (얼음 희석전)";
+                }
+            } else if (servings === '2') {
+                // 2인분 침지현상 해결: 드리퍼 유입 물 총량을 400ml로 압축 차단하고 가수(Bypass) 추가 (MD 3.1)
+                if (roast === 'light') {
+                    coffeeGrams = 50;
+                    scoopText = "(가득 5스푼)";
+                } else {
+                    coffeeGrams = 40;
+                    scoopText = "(가득 4스푼)";
+                }
+
+                if (tempType === 'hot') {
+                    targetWaterTotal = 400; 
+                    bypassGrams = 190;      // 190ml 물 추가 (MD 3.1)
+                    finalVol = "약 510ml (바이패스 포함)";
+                } else { // 2인분 아이스 (MD 5.5)
+                    targetWaterTotal = 400;
+                    bypassGrams = 100;      // 서버 아래 얼음 100g 사전 칠링
+                    finalVol = "약 400ml (얼음 급랭액)";
+                }
+            }
+
+            // [멀티 피드백 칩 기반 오프셋 가산 로직]
+            let tempModifier = 0;
+            let micronModifier = 0;
+            let advicePieces = [];
+
+            if (activeChips.bitter) {
+                tempModifier -= 2;        // 추출 수온 저하시켜 쓴 탄맛 성분 억제
+                micronModifier += 40;      // 그라인딩 넓혀 표면적 축소 (가루 굵어짐)
+                advicePieces.push("⚠️ 쓴맛 제어: 온도를 낮추고 그라인딩 눈금을 넓혀 원치 않는 쓴 탄내 성분 유입을 전면 제어했습니다.");
+            }
+            if (activeChips.astringent) {
+                tempModifier -= 1.5;
+                micronModifier += 30;
+                advicePieces.push("👅 떫은 맛 방지: 후반부 잡미 추출을 지연하기 위해 그라인더 크기를 확대했습니다.");
+            }
+            if (activeChips.sour) {
+                tempModifier += 1.5;      // 신맛을 날리고 풍부한 단맛을 결합하기 위한 수온 증가
+                micronModifier -= 40;     // 성분이 완벽히 온수로 뽑혀 나오도록 분쇄 입자를 조밀하게 조임
+                advicePieces.push("🍋 신맛 튐 제어: 온도를 높이고 가루를 더 오밀조밀하게 갈아 성분의 균형을 이끌어냈습니다.");
+            }
+            if (activeChips.weak) {
+                micronModifier -= 30;     // 과소 투과 우회 방지 (분쇄 조금 더 가늘게)
+                advicePieces.push("💧 바디감 보완: 맛의 밀도를 극대화할 수 있도록 분쇄 조밀 규격을 하향(가늘게) 세팅했습니다.");
+            }
+            if (activeChips.flat) {
+                tempModifier += 1.0;
+                micronModifier -= 20;
+                advicePieces.push("🍂 향미/단맛 최적화: 유효 고품질 향이 한층 더 원활히 방출되도록 추출 온도를 미세 보정했습니다.");
+            }
+
+            // 극한값 보정 가드레일 (추출 안전 온도: 85°C ~ 96°C 보존)
+            temp = Math.max(85, Math.min(96, temp + tempModifier));
+            let targetMicron = baseMicron + micronModifier;
+
+            // 정적 마이크론 스케일을 Comandante 및 EK43 다이얼 범위로 기하 연산
+            // Comandante 기준: 1216µm ≒ 28클릭, 100µm 변동 당 약 3클릭 대입
+            let computedComandante = Math.round(28 + (targetMicron - 1216) / 33);
+            let computedEK = (14.0 + (targetMicron - 1216) / 100).toFixed(1);
+
+            // 눈대중 텍스트 보정
+            let grindText = '* 분쇄 눈대중: 프렌치 프레스보다 살짝 곱고 일반 드립보다 굵은 <strong class="text-slate-300">"깨소금 ~ 굵은 소금"</strong> 크기';
+            if (targetMicron < 1180) {
+                grindText = '* 분쇄 눈대중: V60 유속을 붙잡아 줄 수 있도록 설탕보다 살짝 굵은 <strong class="text-slate-300">"고운 모래"</strong> 크기';
+            } else if (targetMicron > 1320) {
+                grindText = '* 분쇄 눈대중: 침출 시 잡맛 유입을 완벽 차단하는 <strong class="text-slate-300">"매우 굵은 소금"</strong> 크기';
+            }
+            document.getElementById('grindSummaryNote').innerHTML = grindText;
+
+            // 복합 에러 진단
+            let adviceHTML = "";
+            if (activeChips.bitter && activeChips.sour) {
+                adviceHTML = `
+                    <div class="text-amber-300 font-bold mb-1.5 flex items-center gap-1">
+                        <span>🚨</span> 채널링 (물길 쏠림 현상) 위기 감지!
+                    </div>
+                    <p class="leading-relaxed">쓴맛과 시큼함이 동시에 감지되는 것은 필터 내부의 물길이 한쪽으로 치우쳐 <strong>'과소 추출'과 '과다 추출'이 편향되어 동시에 일어나는 대표적인 채널링 현상</strong>입니다. (PDF p.5) 원두 가루를 필터 안에 넣고 평평하게 톡톡 가볍게 다져준 뒤 물줄기가 편향되지 않게 아주 젠틀하게 골고루 적셔 주어야 합니다.</p>
+                `;
+            } else if (activeChips.perfect) {
+                adviceHTML = `
+                    <div class="text-emerald-300 font-bold mb-1 flex items-center gap-1">
+                        <span>🌟</span> 골든 카테고리 (황금 밸런스 모드)
+                    </div>
+                    <p class="leading-relaxed">사용 중이신 <strong class="text-emerald-300">${getDripperKoreanName()} 드리퍼</strong>의 유속 및 침출 특징과 원두 밀도를 조밀하게 역추산한 마스터 레시피입니다. 정밀한 물 주입 단계 조절을 통해 스페셜티 고유의 매력을 만끽하세요.</p>
+                `;
+            } else {
+                adviceHTML = `
+                    <div class="text-emerald-400 font-bold mb-1.5 flex items-center gap-1">
+                        <span>🎯</span> 정밀 교정 추출 처방전
+                    </div>
+                    <ul class="list-disc pl-4 space-y-1 text-slate-300">
+                        ${advicePieces.map(piece => `<li>${piece}</li>`).join('')}
+                    </ul>
+                `;
+            }
+
+            // 연산 결과 실시간 DOM 투사
+            document.getElementById('calcCoffee').innerText = `${coffeeGrams}g`;
+            document.getElementById('calcCoffeeScoop').innerText = scoopText;
+            document.getElementById('calcTemp').innerText = `${Math.round(temp)}°C`;
+            document.getElementById('calcWaterTotal').innerText = `${targetWaterTotal}ml`;
+            document.getElementById('calcFinalVol').innerText = finalVol;
+            document.getElementById('grindComandante').innerText = `${computedComandante} 클릭`;
+            document.getElementById('grindEK').innerText = `${computedEK} 다이얼`;
+            document.getElementById('grindMicron').innerText = `${targetMicron} µm`;
+
+            if (bypassGrams > 0) {
+                document.getElementById('bypassNote').innerText = `서버 우회 ${bypassGrams}g`;
+                document.getElementById('bypassNote').className = "text-[10px] text-emerald-400 block mt-0.5 font-bold";
+            } else {
+                document.getElementById('bypassNote').innerText = "가수 우회 없음";
+                document.getElementById('bypassNote').className = "text-[10px] text-slate-400 block mt-0.5";
+            }
+
+            document.getElementById('brewAdviceCard').innerHTML = adviceHTML;
+
+            // 세부 동적 타임라인 레시피 테이블 및 우측 물리 지식 갱신
+            renderStepsAndAdvice(servings, tempType, coffeeGrams, targetWaterTotal, bypassGrams);
+            renderBeans(roast);
+        }
+
+        function getDripperKoreanName() {
+            if (selectedDripperType === 'kalita') return '칼리타 웨이브';
+            if (selectedDripperType === 'switch') return '하리오 스위치';
+            return '하리오 V60';
+        }
+
+        // 타임라인 플로우 빌더 (드리퍼 유형 x servings x tempType 에 기반한 지능적 프로토콜 변조)
+        function renderStepsAndAdvice(servings, tempType, coffee, water, bypass) {
+            const stepsContainer = document.getElementById('recipeSteps');
+            const physicsContainer = document.getElementById('physicalAdviceContainer');
+            stepsContainer.innerHTML = '';
+            physicsContainer.innerHTML = '';
+
+            let steps = [];
+            let physicalAdvices = [];
+
+            // 1. 우측 물리 지식 팁 패널 동적 구성
+            if (selectedDripperType === 'v60') {
+                physicalAdvices = [
+                    {
+                        title: "V60 유속 통제 및 푸어링 속도 (PDF p.5)",
+                        desc: "V60는 중앙부 단일 구멍과 나선형 리브로 인해 유속이 극도로 빠릅니다. 물줄기 높이를 너무 높여 낙하 충격을 주면 미분이 벽으로 몰려 채널링이 생기니, 필터면 2cm 높이에서 젠틀하게 회전 푸어링 하십시오."
+                    },
+                    {
+                        title: "물 빠짐 속도 관찰 (MD 5.4)",
+                        desc: "추출 시간이 3분을 넘어선다면 입자가 너무 고운 것입니다. 2분 15초~2분 40초 골든타임에 물이 원활히 투과되어 떨어지도록 그라인더 클릭수를 미세 조정해야 합니다."
+                    }
+                ];
+            } else if (selectedDripperType === 'switch') {
+                physicalAdvices = [
+                    {
+                        title: "하이브리드 스위치 추출 원리 (PDF p.8, 21)",
+                        desc: "스위치를 닫으면 물이 가루를 온전히 감싸며 성분을 우려내는 '침출식'이 되며, 열면 흘러내리는 '투과식'이 됩니다. 테츠 카스야 2025 프로토콜은 이 개폐 시점을 기교적으로 조절해 풍부한 단맛만을 안전하게 뽑아냅니다."
+                    },
+                    {
+                        title: "물 온도 저하 보정법 (PDF p.21)",
+                        desc: "스위치를 닫고 오랜 시간 뜨거운 물을 가두면 과추출의 쓴맛이 나기 쉬우므로, 2차 푸어 이후에는 찬물을 주전자에 가수한 뒤 낮은 온도 수용액(70~80°C)을 주입해 쓴맛을 과학적으로 차단합니다."
+                    }
+                ];
+            } else { // kalita
+                physicalAdvices = [
+                    {
+                        title: "칼리타 웨이브의 리브와 편차 제거 (PDF p.7)",
+                        desc: "웨이브 필터의 20개 리브는 원두와 필터 벽 간의 밀착을 막아 공기 흐름을 돕습니다. 바닥 평평한 웨이브는 대충 쏟아부어도 필터 자체가 유동 저항 역할을 자처하여 일률적인 바디를 만듭니다."
+                    },
+                    {
+                        title: "가수 우회 기술 (Bypass) 최적 결합 (MD 3.1)",
+                        desc: "칼리타 웨이브 185에 2인분 원두를 가득 담을 경우 하단 홀이 막혀 흐름 정체가 짙어집니다. 드리퍼 부을 용량을 제한하고 서버에 맑은 온수를 섞는 '가수법'은 떫은 가루 수용액 유입을 완벽히 퇴치합니다."
+                    }
+                ];
+            }
+
+            // 2. 드리퍼 및 서빙 형태 분기에 따른 지능적 추출 프로토콜 빌드
+            if (selectedDripperType === 'switch') {
+                // 하리오 스위치 특화 동적 타임라인 레시피
+                if (tempType === 'hot') {
+                    if (servings === '1') {
+                        // 테츠 카스야 2025 개량 1인분 수온 하강 가공법 (PDF p.21)
+                        steps = [
+                            {
+                                time: "0:00",
+                                title: "1단계: 스위치 [닫기] + 단맛 뜸 들이기",
+                                desc: "게이트 밸브를 닫은 채로 정밀 온수 40g을 원형으로 올리고 40초간 원두가 활성화되도록 단단히 가둡니다.",
+                                vol: "40g"
+                            },
+                            {
+                                time: "0:40",
+                                title: "2단계: 스위치 [열기] + 본 추출 1차 투과",
+                                desc: "스위치를 과감히 아래로 밀어 열면서 물 80g을 세차게 회전 주입하여 불려진 당분과 유효 아로마를 빠르게 용해 투과시킵니다.",
+                                vol: "120g"
+                            },
+                            {
+                                time: "1:30",
+                                title: "3단계: 수온 저하 보정 투과",
+                                desc: "열려있는 상태로 센터에 80g 물을 추가 주입합니다. (이때 드립포트에 차가운 정수 물 100g을 섞어 주전자 내부 수온을 70~80°C 수준으로 급다운시키는 것이 쓴맛 차단의 핵심 비책입니다.)",
+                                vol: "200g"
+                            },
+                            {
+                                time: "2:10",
+                                title: "4단계: 스위치 [닫기] + 저온 온수 얌전한 주입",
+                                desc: "게이트를 다시 잠그고, 온도가 낮아진 저온 온수 100g을 마저 붓고 뜸을 부드럽게 지닙니다. 저온 우림 기법이 적용되어 쓴맛이 나지 않고 깔끔한 뒷여운이 생성됩니다.",
+                                vol: "300g"
+                            },
+                            {
+                                time: "2:45",
+                                title: "5단계: 스위치 [열기] + 추출 최종 해방",
+                                desc: "스위치를 완전히 내리고(열림) 남은 커피 농축 진액을 서버로 시원하게 낙하시킨 후 즉시 즐기십시오.",
+                                vol: "완전 해방"
+                            }
+                        ];
+                    } else {
+                        // 2인분 핫 스위치 우회 침출
+                        steps = [
+                            {
+                                time: "0:00",
+                                title: "1단계: 스위치 [닫기] + 2인분 벌크 뜸",
+                                desc: "밸브를 닫고 물 80g을 고르게 흔들어 부어 40g 원두 깊은 층까지 안착시켜 1분 동안 침지 불림을 강하게 전개합니다.",
+                                vol: "80g"
+                            },
+                            {
+                                time: "1:00",
+                                title: "2단계: 스위치 [열기] + 고농축 중심 1차 투화",
+                                desc: "스위치를 열고 물 120g을 가볍게 부어 서버 내부 예열을 겸하며 진한 엑기스를 밑단으로 쏟아부어 적립합니다.",
+                                vol: "200g"
+                            },
+                            {
+                                time: "2:00",
+                                title: "3단계: 스위치 [닫기] + 잔여 200g 침출 후 개방",
+                                desc: "게이트를 다시 밀폐하고 물 200g을 단숨에 부어 원두층을 흔든 뒤 2분 30초에 스위치를 개방하여 빠른 유속으로 잡미 돌출 전 격리 오프시킵니다.",
+                                vol: "400g"
+                            },
+                            {
+                                time: "추출 마감",
+                                title: "4단계: 맑은 수용액 우회 (Bypass) 가수 결합",
+                                desc: "서버의 농밀한 오렌지 갈색 진액액에 준비된 정수 온수 190g을 희석 믹스하여 잡미 제로의 고급 2인분을 완성합니다.",
+                                vol: "가수 190g 추가"
+                            }
+                        ];
+                    }
+                } else {
+                    // 아이스 1, 2인분 하리오 스위치 (George 40-80-80 공식 기반)
+                    if (servings === '1') {
+                        steps = [
+                            {
+                                time: "시작 전",
+                                title: "드리퍼 내부 수축 방지 예열 (PDF p.22)",
+                                desc: "뜨거운 온수 80g으로 페이퍼 필터를 린싱하여 페이퍼 냄새를 씻어내고 서버를 온열시킨 후 그 물은 싹 비워 버립니다.",
+                                vol: "린싱 80g"
+                            },
+                            {
+                                time: "0:00",
+                                title: "1단계: 스위치 [닫기] + 진한 뜸 들이기",
+                                desc: "게이트를 막은 상태로 온수 40g을 부어 가스를 꽉 잡아 향이 비산되는 것을 차단하고 40초 대기합니다.",
+                                vol: "40g"
+                            },
+                            {
+                                time: "0:40",
+                                title: "2단계: 스위치 [열기] + 본 추출 1차",
+                                desc: "밸브를 신속히 열면서 물 80g을 과감히 주입해 투과를 촉진시킵니다. 주입 후 드리퍼를 좌우로 가볍게 흔들어 수평을 정돈합니다.",
+                                vol: "120g"
+                            },
+                            {
+                                time: "1:15",
+                                title: "3단계: 본 추출 2차 가벼운 센터 푸어",
+                                desc: "열려있는 상태 그대로 남은 온수 80g을 센터 중심에 점잖은 수압으로 점입시켜 미분 날림을 방지하며 200g 누적을 완료합니다.",
+                                vol: "200g"
+                            },
+                            {
+                                time: "2:30",
+                                title: "4단계: 얼음 가득 컵에 다이렉트 칠링",
+                                desc: "원액 200g이 떨어지면 드리퍼를 제끼고 보냉력이 짱짱한 잔에 얼음을 잔뜩 넣은 뒤 그 위에 그대로 낙하시켜 급랭 차갑게 즐깁니다.",
+                                vol: "추출 오프"
+                            }
+                        ];
+                    } else {
+                        // 스위치 2인분 아이스
+                        steps = [
+                            {
+                                time: "시작 전",
+                                title: "서버 바닥 기초 얼음 100g 칠링",
+                                desc: "낙하 에센스의 높은 열로 인한 과추출 방지와 단맛 봉쇄를 위해 서버 밑부분에 단단한 각얼음 100g을 먼저 깔아 세팅합니다.",
+                                vol: "얼음 100g 안착"
+                            },
+                            {
+                                time: "0:00",
+                                title: "1단계: 스위치 [닫기] + 아이스 고강도 뜸",
+                                desc: "게이트를 잠그고 물 80g을 가루 위로 골고루 부어 이산화탄소를 빼주고 성분을 우려내는 1분 뜸을 전개합니다.",
+                                vol: "80g"
+                            },
+                            {
+                                time: "1:00",
+                                title: "2단계: 스위치 [열기] + 2차 물 주입",
+                                desc: "열린 게이트로 뜨거운 온수 120g을 스파이럴로 회전 주입하여 하단 얼음 위로 성분이 똑똑 칠링되어 떨어지게 만듭니다.",
+                                vol: "200g"
+                            },
+                            {
+                                time: "1:50~",
+                                title: "3단계: 3차 와일드 급랭 투입",
+                                desc: "남은 온수 200g을 부드러우면서도 굵은 물길로 빠르게 쏟아부어 유입 압력을 상승시킵니다. 2분 45초 이전에 드리퍼를 분리해 수거합니다.",
+                                vol: "400g"
+                            },
+                            {
+                                time: "최종 서빙",
+                                title: "4단계: 신선한 아이스 얼음 컵 이염",
+                                desc: "서버 안의 칠링 원액을 흔들어 남아있는 얼음을 골고루 섞은 후, 깨끗한 식용 각얼음이 채워진 예쁜 글라스 잔에 고운 액만 부어냅니다.",
+                                vol: "완벽 이염 완료"
+                            }
+                        ];
+                    }
+                }
+            } else if (selectedDripperType === 'v60') {
+                // 하리오 V60 정통 바리스타 정밀 유속 레시피
+                if (tempType === 'hot') {
+                    if (servings === '1') {
+                        steps = [
+                            {
+                                time: "0:00",
+                                title: "1단계: 중심부 점적 뜸 들이기",
+                                desc: "구멍이 크기 때문에 물줄기가 빠르게 낙하할 수 있으므로, 입구를 최대한 가깝게 가져가 점적 형태로 가늘고 정밀하게 온수 40g을 얹듯이 주입하며 40초 대기합니다.",
+                                vol: "40g"
+                            },
+                            {
+                                time: "0:40",
+                                title: "2단계: 1차 정교한 스파이럴 푸어",
+                                desc: "중심에서 바깥쪽으로 지름 2.5cm 원을 그리며 80g 물을 아주 젠틀하게 부어줍니다. 물이 종이 필터 가장자리에 직접 닿아 맹물 통과가 되는 우회(Bypass)를 필사적으로 방어해야 합니다.",
+                                vol: "120g"
+                            },
+                            {
+                                time: "1:15",
+                                title: "3단계: 2차 센터 집중 낙하 제어 푸어",
+                                desc: "물의 구덩이가 깊어지지 않도록 중간 세기 물줄기로 부드럽게 100g 물을 추가 낙하시키며 성분을 뽑아냅니다.",
+                                vol: "220g"
+                            },
+                            {
+                                time: "1:55",
+                                title: "4단계: 3차 잔여 유량 채우기 및 스핀",
+                                desc: "마지막 온수 80g을 가볍게 얹어주고 물 주입 직후 드리퍼를 위쪽에서 양 손잡이로 잡아 부드럽게 원형으로 2바퀴 가볍게 돌려 수평화(Spinning)를 유도합니다. (2분 20초 이내에 드리퍼 오프)",
+                                vol: "300g"
+                            }
+                        ];
+                    } else {
+                        // 2인분 V60 핫 우회
+                        steps = [
+                            {
+                                time: "0:00",
+                                title: "1단계: 중심부 물길 방지 고강도 뜸",
+                                desc: "가루가 깊게 쌓여 있어 물길 편중(채널링)이 극단으로 일어나기 쉽습니다. 온수 80g을 부어 가루층 내부까지 온전히 적시고 55초간 충분히 뜸을 이행합니다.",
+                                vol: "80g"
+                            },
+                            {
+                                time: "0:55",
+                                title: "2단계: 2인분 메인 1차 투과 제어",
+                                desc: "온수 160g을 스파이럴 원형으로 얌전하게 주입해 과소 추출을 예방합니다. 필터 벽면에 물을 직접 분사하면 커피액이 싱거워지니 주의하십시오.",
+                                vol: "240g"
+                            },
+                            {
+                                time: "1:50",
+                                title: "3단계: 3차 외곽 방지 고속 낙하 수거",
+                                desc: "남은 온수 160g을 힘 있는 속도로 중앙에 내려 부어 원두 윗면의 고여있는 물의 수위를 보존한 뒤 2분 35초에 드리퍼를 수거 격리합니다.",
+                                vol: "400g"
+                            },
+                            {
+                                time: "마무리",
+                                title: "4단계: 청정 끓는 온수 190g 우회(Bypass) 주입",
+                                desc: "서버 내에 가두어진 깔끔하고 밝은 과일 향미의 엑기스에 끓는 물 190g을 섞어, 잡미와 가루 떫은 가루즙이 침투되지 않은 투명한 2인분을 서빙합니다.",
+                                vol: "우회 가수 190g"
+                            }
+                        ];
+                    }
+                } else {
+                    // V60 아이스 레시피
+                    if (servings === '1') {
+                        steps = [
+                            {
+                                time: "시작 전",
+                                title: "페이퍼 향 제어 필수 린싱",
+                                desc: "아이스 커피는 차가울 때 페이퍼 특유의 종이 맛이 더 부각되므로 반드시 뜨거운 물 80g으로 V60 필터 린싱을 가해 잡내를 완벽 세척한 뒤 서버의 린싱물은 버립니다.",
+                                vol: "린싱 80g"
+                            },
+                            {
+                                time: "0:00",
+                                title: "1단계: 에센스 뜸들이기 (아이스)",
+                                desc: "뜨거운 수온 40g을 원두의 중앙부터 외곽 안쪽선까지 한 땀 한 땀 부어 40초간 대기하며 단맛 향미 입자를 불립니다.",
+                                vol: "40g"
+                            },
+                            {
+                                time: "0:40",
+                                title: "2단계: 2차 유속 가속화 메인 푸어",
+                                desc: "온수 80g을 스파이럴로 시원하게 올려줍니다. 구멍이 넓어 빨리 통과되므로 정교한 물줄기로 천천히 회전해야 농도를 가둘 수 있습니다.",
+                                vol: "120g"
+                            },
+                            {
+                                time: "1:20",
+                                title: "3단계: 3차 정밀 센터 유량 고정",
+                                desc: "마지막 온수 80g을 가운데 지점에 조용히 올려 투과 수위를 높인 뒤 2분 10초 무렵 물이 다 하강하기 전 과감하게 드리퍼를 철수합니다.",
+                                vol: "200g"
+                            },
+                            {
+                                time: "최종 음용",
+                                title: "4단계: 단단한 얼음 글래스 급랭 서빙",
+                                desc: "유속을 타고 맑게 떨어져 내린 고밀도 원액 200g을 아이스 보온 컵에 가득 담긴 각얼음 위에 올려 고유의 깨끗함을 경험합니다.",
+                                vol: "칠링 마감"
+                            }
+                        ];
+                    } else {
+                        // V60 2인분 아이스 (MD 5.5 연동)
+                        steps = [
+                            {
+                                time: "시작 전",
+                                title: "서버 하단 사전 얼음 칠링",
+                                desc: "진하고 농후한 갈색 에센스를 아래서 바로 가두기 위해 서버 하단에 투명한 얼음 100g을 튼튼하게 깔아 예열을 대신합니다.",
+                                vol: "얼음 100g 대기"
+                            },
+                            {
+                                time: "0:00",
+                                title: "1단계: 대물량 원두 고르게 적셔 뜸들이기",
+                                desc: "수온 90°C 내외의 온수 80g을 사용하여 40g 가루 중심에서 주변부 외곽까지 가늘게 붓고 가스가 다 빠지도록 1분간 충분히 기다려줍니다.",
+                                vol: "80g"
+                            },
+                            {
+                                time: "1:00",
+                                title: "2단계: 2차 유속 정체 예방 푸어",
+                                desc: "중심 원을 좁고 일정하게 유지하며 온수 120g을 가라앉힙니다. V60 리브를 타고 물이 신속히 내려가 얼음을 촉촉하게 적십니다.",
+                                vol: "200g"
+                            },
+                            {
+                                time: "1:55",
+                                title: "3단계: 3차 고속 투과 및 조기 수거",
+                                desc: "나머지 온수 200g을 원형으로 쏟아부어 드리퍼 수위를 단숨에 올린 뒤 유속 흐름이 완전 멈추기 전 2분 40초 부근에 드리퍼를 떼냅니다.",
+                                vol: "400g"
+                            },
+                            {
+                                time: "마무리",
+                                title: "4단계: 칠링 컵 완벽 이염",
+                                desc: "서버 내부의 얼음을 완전히 녹을 때까지 스위블 회전시킨 후, 새 얼음 가득 든 보냉 이중 컵에 옮겨 부어 극강의 깨끗하고 청량한 아이스 브루잉을 즐깁니다.",
+                                vol: "급랭 완료"
+                            }
+                        ];
+                    }
+                }
+            } else {
+                // 칼리타 웨이브 (Kalita Wave) 표준 평평식 레시피 (기본 베이스)
+                if (tempType === 'hot') {
+                    if (servings === '1') {
+                        steps = [
+                            {
+                                time: "0:00",
+                                title: "1단계: 원두 뜸 들이기 (Pre-wetting)",
+                                desc: `온수 ${Math.round(coffee * 1.8)}g을 드립 서버 주둥이에 가깝게 밀착하여 원두 표면에 부드럽게 얹어주고 40초 동안 기다립니다. 이산화탄소가 날아가며 표면이 빵처럼 촉촉하게 부풀어 오릅니다.`,
+                                vol: `${Math.round(coffee * 1.8)}g`
+                            },
+                            {
+                                time: "0:40",
+                                title: "2단계: 본 추출 1차 메인 푸어",
+                                desc: "가장자리의 필터 벽이 흐트러지지 않도록 중앙부 중심에서 지름 2cm 원형을 그리며 얌전하게 물줄기를 투과시킵니다. 진한 갈색 농축 에센스가 흘러내려 모입니다.",
+                                vol: `${Math.round(water * 0.45)}g`
+                            },
+                            {
+                                time: "1:20",
+                                title: "3단계: 본 추출 2차 정밀 푸어",
+                                desc: "드리퍼 내부 수위를 확인하며, 물을 가로막지 않도록 부드러운 센터 푸어로 남은 추출 총 용량을 넉넉하게 채워 부어냅니다.",
+                                vol: `${water}g`
+                            },
+                            {
+                                time: "2:05",
+                                title: "4단계: 드리퍼 전격 분리 (Cut-off)",
+                                desc: "드리퍼 밑면 유속에 잔류 액을 기다리지 마세요. 쓴맛과 거친 떫은 가루 수용액이 들어오기 전에 2분 15초 내에 드리퍼를 떼어내야 뒷맛이 산뜻하고 청량합니다.",
+                                vol: "추출 즉시 차단"
+                            }
+                        ];
+                    } else {
+                        // 2인분 칼리타 핫 우회 (MD 3.1)
+                        steps = [
+                            {
+                                time: "0:00",
+                                title: "1단계: 2인분 원두 침지 뜸들이기",
+                                desc: `원두 두께가 40g으로 깊으므로 온수 80g을 표면 안쪽까지 균일하게 통과시켜 스며들게 합니다. 충분한 성분 해방을 유도하기 위해 뜸 들기 대기 시간을 1분으로 설정합니다.`,
+                                vol: "80g"
+                            },
+                            {
+                                time: "1:00",
+                                title: "2단계: 에센스 센터 집중 푸어링",
+                                desc: "물 80g을 원을 좁게 그리며 투하합니다. 원두 내부의 미분이 가로막아 드리퍼 안 유속 침지가 시작될 때 원활한 흐름을 지속하기 위해 중앙을 위주로 투과합니다.",
+                                vol: "160g"
+                            },
+                            {
+                                time: "2:00",
+                                title: "3단계: 마지막 와일드 투과 오프",
+                                desc: "남은 온수 240g을 빠른 물줄기로 신속하게 쏟아부어 유입 압력을 높입니다. 물이 마지막 바닥층까지 다 지나가기 전 2분 40초 경에 드리퍼를 수거해 서버를 완벽히 격리합니다.",
+                                vol: "400g"
+                            },
+                            {
+                                time: "추출 직후",
+                                title: "4단계: 청정 끓는 물 우회(Bypass) 가미 (MD 3.1)",
+                                desc: "서버에 적립된 농축 에센스(약 320g)에 포트에 남아있던 끓는 온수 190g을 직접 보정 주입합니다. 가루 접촉 시간을 줄여 떫은 성분이 유입되지 않은 최고급 맛을 완성합니다.",
+                                vol: "우회 물 190g 주입"
+                            }
+                        ];
+                    }
+                } else {
+                    // 칼리타 아이스
+                    if (servings === '1') {
+                        steps = [
+                            {
+                                time: "시작 전",
+                                title: "드리퍼 입구 예열 린싱 (PDF p.22)",
+                                desc: "물 변조 예방을 위해 온수 80g 정도로 페이퍼 필터를 가볍게 적신 뒤 서버의 배출액은 모두 내다 버립니다.",
+                                vol: "린싱 80g"
+                            },
+                            {
+                                time: "0:00",
+                                title: "1단계: 에센셜 아이스 뜸들이기",
+                                desc: "온수 40g을 부드럽게 올려 적신 후, 향 유실 방지를 위해 40초간 원두가 활성화되도록 기다립니다.",
+                                vol: "40g"
+                            },
+                            {
+                                time: "0:40",
+                                title: "2단계: 2차 메인 로테이션 푸어",
+                                desc: "온수 80g을 원형 나선으로 조심히 올려 투과를 재촉하며 원두 베드를 흔들어 수평으로 정열합니다.",
+                                vol: "120g"
+                            },
+                            {
+                                time: "1:15",
+                                title: "3단계: 3차 보존 센터 푸어",
+                                desc: "나머지 80g 온수를 중앙에 얌전히 얹어 내려오게 합니다. 바닥 3공의 일정한 제한 통과로 진한 수율이 모입니다.",
+                                vol: "200g"
+                            },
+                            {
+                                time: "2:30",
+                                title: "4단계: 아이스 글래스 급랭 서빙",
+                                desc: "원액 200g 용량이 차면 드리퍼를 철수하고 미리 준비해둔 단단한 식용 얼음 가득 든 잔에 부어 즉각 마십니다.",
+                                vol: "추출 오프"
+                            }
+                        ];
+                    } else {
+                        // 칼리타 2인분 아이스
+                        steps = [
+                            {
+                                time: "시작 전",
+                                title: "서버 하단 얼음 안착",
+                                desc: "추출 직후 급속 냉각으로 유기산을 가두기 위해 서버 하단에 단단한 각얼음 100g을 조심히 정렬합니다.",
+                                vol: "얼음 100g 안착"
+                            },
+                            {
+                                time: "0:00",
+                                title: "1단계: 대량 뜸들이기",
+                                desc: "수온 90°C 내외의 물 80g을 사용하여 원두층 전체 외곽까지 평평하게 적시고 1분간 대기합니다.",
+                                vol: "80g"
+                            },
+                            {
+                                time: "1:00",
+                                title: "2단계: 2차 미분 전개 푸어",
+                                desc: "중앙을 향해 가볍게 물 80g을 올려 평평한 하단 구멍을 통해 얼음 위로 고온 에센스를 고르게 흘려 내립니다.",
+                                vol: "160g"
+                            },
+                            {
+                                time: "1:55",
+                                title: "3단계: 3차 스피드 로드 푸어",
+                                desc: "나머지 240g 온수를 다 부어 드리퍼 유압을 가득 늘린 뒤 떫은맛이 침투하기 전 2분 45초 경에 드리퍼를 떼어내 마감합니다.",
+                                vol: "400g"
+                            },
+                            {
+                                time: "최종 마감",
+                                title: "4단계: 얼음 잔 이염 서빙",
+                                desc: "서버를 스핀해 남아있는 얼음을 녹여 밀도를 일정하게 섞은 뒤 단단한 글라스 얼음 잔에 조심히 담아냅니다.",
+                                vol: "급랭 완료"
+                            }
+                        ];
+                    }
+                }
+            }
+
+            // UI 렌더링 - 타임라인 단계
+            steps.forEach(step => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'flex gap-4 p-3 bg-slate-950/40 rounded-xl border border-slate-800/40';
+                stepDiv.innerHTML = `
+                    <div class="flex-none w-16 text-center">
+                        <span class="badge-print inline-block bg-emerald-500/10 text-emerald-400 font-extrabold text-xs px-2 py-0.5 rounded">${step.time}</span>
+                        <span class="block text-[10px] text-slate-500 mt-1 font-mono">${step.vol}</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-sm font-bold text-white mb-1">${step.title}</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">${step.desc}</p>
+                    </div>
+                `;
+                stepsContainer.appendChild(stepDiv);
+            });
+
+            // UI 렌더링 - 우측 물리 팁 패널
+            physicalAdvices.forEach(advice => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'border-l-2 border-emerald-400 pl-2';
+                itemDiv.innerHTML = `
+                    <strong class="text-white block mb-0.5">${advice.title}</strong>
+                    ${advice.desc}
+                `;
+                physicsContainer.appendChild(itemDiv);
+            });
+        }
+
+        function renderBeans(roast) {
+            const container = document.getElementById('recommendedBeans');
+            container.innerHTML = '';
+
+            const list = beanDatabase[roast];
+            list.forEach(bean => {
+                const card = document.createElement('div');
+                card.className = 'p-3 bg-slate-950/60 rounded-xl border border-slate-800/50 hover:border-emerald-500/30 transition-all';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="text-xs font-bold text-emerald-400 uppercase">[${bean.roaster}]</span>
+                        <span class="text-[10px] text-slate-500 font-bold">인생구매처</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-white mb-1">${bean.product}</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">${bean.desc}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 앱 초기 로드 시 칩 렌더러와 기본 연산 호출
+        window.onload = function() {
+            updateDripperUI();
+            updateChipUI();
+            calculateBrewing();
+        };
+    </script>
+</body>
+</html>

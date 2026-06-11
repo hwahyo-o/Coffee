@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커피 브루잉 다이어리 - 15년 노하우 실패 없는 홈카페 비법서</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts (Noto Sans KR, Gaegu - Comic style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans KR', 'sans-serif'],
+            hand: ['Gaegu', 'cursive'],
+          },
+          colors: {
+            coffee: {
+              50: '#fdfbf7',
+              100: '#f8f1e5',
+              200: '#e7d4b7',
+              300: '#d5b68a',
+              400: '#c09561',
+              500: '#aa7c47',
+              600: '#8e6236',
+              700: '#724b27',
+              800: '#56361a',
+              900: '#3c230f',
+            }
+          },
+          boxShadow: {
+            'brutal': '5px 5px 0px 0px #000000',
+            'brutal-lg': '9px 9px 0px 0px #000000',
+            'brutal-sm': '3px 3px 0px 0px #000000',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* A4 인쇄를 위한 정교한 출력 레이아웃 */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11px;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-page {
+        page-break-after: always;
+        page-break-inside: avoid;
+        padding: 20px !important;
+        margin: 0 0 20px 0 !important;
+        border: 4px solid #000000 !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        background: white !important;
+        min-height: 275mm !important;
+        box-sizing: border-box;
+      }
+      .print-no-break {
+        page-break-inside: avoid;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 12mm 12mm 12mm 12mm;
+      }
+    }
+
+    /* 물방울 추출 낙하 애니메이션 */
+    @keyframes drop-flow {
+      0% { transform: translateY(-5px); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: translateY(45px); opacity: 0; }
+    }
+    .drip-effect {
+      animation: drop-flow 1.2s infinite linear;
+    }
+  </style>
+</head>
+<body class="bg-[#faf6f0] text-slate-950 font-sans selection:bg-yellow-200 leading-relaxed min-h-screen pb-16">
+
+  <!-- 상단 컨트롤 헤더 (웹 화면에서만 노출) -->
+  <header class="no-print bg-white border-b-4 border-black py-4 px-6 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-yellow-300 border-2 border-black p-2.5 rounded-full text-xl shadow-brutal-sm font-bold">☕</div>
+        <div>
+          <h1 class="text-lg font-black tracking-tight flex items-center gap-2">
+            양바리의 커피 브루잉 다이어리 <span class="bg-black text-yellow-300 text-[10px] px-2 py-0.5 rounded-md font-mono">BOOK VER 7</span>
+          </h1>
+          <p class="text-xs text-slate-600 font-semibold">15년 노하우와 나노 바나나 AI 웹툰 생성기가 합쳐진 명품 홈카페 조력서</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="window.print()" class="bg-yellow-300 hover:bg-yellow-400 text-black border-2 border-black font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm">
+          🖨️ A4 교본 인쇄 / PDF 저장
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-16">
+
+    <!-- PAGE 1: COVER & DIARY OUTLINE -->
+    <section class="print-page bg-white rounded-3xl border-4 border-black p-8 md:p-12 shadow-brutal-lg relative flex flex-col justify-between min-h-[85vh] md:min-h-[960px]">
+      <div>
+        <div class="flex justify-between items-start mb-6">
+          <span class="bg-black text-yellow-300 border-2 border-black text-xs font-black px-3.5 py-1.5 rounded-lg shadow-brutal-sm">
+            📕 PROFESSIONAL HOME CAFE MANUAL
+          </span>
+          <span class="text-xs font-bold text-slate-500">출처: 프롤로그 [Page 1-3]</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-black text-slate-950 leading-tight">
+          15년의 방대한 노하우,<br>
+          <span class="text-coffee-600 relative inline-block my-2">
+            단 1초 만에 마스터하다
+            <span class="absolute bottom-2 left-0 w-full h-4 bg-yellow-200 -z-10 transform -rotate-1"></span>
+          </span>
+        </h1>
+        <p class="text-sm md:text-base text-slate-600 mt-6 max-w-2xl font-medium">
+          "학원에 수백만 원 뜯기지 마세요." 국가대표 안재혁의 치열한 매장 노하우부터 스페셜티 선구자 커피리브레 서필훈 사장님께 익힌 맛의 정수까지, 똥손도 기적처럼 컵 노트를 만끽하도록 완벽한 규칙을 전파합니다.
+        </p>
+      </div>
+
+      <!-- 기본 만화식 소개 패널 -->
+      <div class="bg-amber-50 rounded-2xl border-4 border-black p-6 my-8 flex flex-col md:flex-row items-center gap-6 relative shadow-brutal-sm">
+        <div class="flex-shrink-0 relative">
+          <!-- 양바리 캐릭터 드로잉 (SVG) -->
+          <svg class="w-24 h-24 text-coffee-800 bg-yellow-100 rounded-full p-2 border-4 border-black shadow-brutal-sm" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 8C32 8 20 20 20 38C20 50 28 60 40 66V78H60V66C72 60 80 50 80 38C80 20 68 8 50 8Z" fill="#56361a" stroke="#000" stroke-width="3"/>
+            <path d="M50 8V60" stroke="#000" stroke-width="2" stroke-dasharray="3 3"/>
+            <circle cx="50" cy="54" r="21" fill="#fed7aa" stroke="#000" stroke-width="3"/>
+            <circle cx="41" cy="52" r="7" stroke="#000" stroke-width="3" fill="#fff"/>
+            <circle cx="59" cy="52" r="7" stroke="#000" stroke-width="3" fill="#fff"/>
+            <line x1="48" y1="52" x2="52" y2="52" stroke="#000" stroke-width="3"/>
+            <path d="M46 62C48 64 52 64 54 62" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="34" cy="58" r="2.5" fill="#f87171"/>
+            <circle cx="66" cy="58" r="2.5" fill="#f87171"/>
+          </svg>
+          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded border-2 border-black">양바리</span>
+        </div>
+        
+        <div class="bg-white p-4 rounded-xl border-2 border-black flex-1 relative">
+          <p class="font-hand text-2xl text-coffee-950 font-black mb-1">“왜 내 커피는 늘 도라지 쓴맛이 날까?”</p>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            바로 장비의 과학을 모르고 남들이 무작정 찬양하는 '하리오 V60' 같은 초고난도 전문가용 제품을 충동구매했기 때문입니다! 입문자는 물줄기가 조금만 삐끗해도 유속이 망가져 맛이 떫어집니다. 대충 부어도 일정한 추출 유속을 가두는 드리퍼를 골라보세요! [Page 5]
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t-4 border-black pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <span class="text-[10px] text-slate-400 block uppercase font-black">Author &amp; Master</span>
+          <span class="font-black text-slate-900">양지원 바리스타 (커피브루잉다이어리 15년 총망라)</span>
+        </div>
+        <div class="text-slate-400 text-xs sm:text-right">
+          <span>신라호텔 계열 브런치 &amp; 국가대표 매장 총괄 이력 [Page 1]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: REAL-TIME BREWING ENGINE (스마트 실시간 브루잉 계산기) -->
+    <section class="print-page bg-white rounded-3xl border-4 border-black p-6 md:p-10 shadow-brutal-lg space-y-8">
+      <div class="border-b-4 border-black pb-6 text-center space-y-2">
+        <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3.5 py-1 rounded-full shadow-brutal-sm inline-block">ENGINE SECTION</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">원두 맞춤형 실시간 브루잉 계산기</h2>
+        <p class="text-slate-600 text-xs font-semibold">내 원두 상태를 콕 집어 입력하면, 15년 차 노하우 공식에 근거하여 추출 변수를 즉시 연산해줍니다. [Page 15-19]</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- 연산 컨트롤러 파트 (5칸) -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="bg-amber-50 border-4 border-black p-5 rounded-2xl shadow-brutal">
+            <h3 class="font-black text-sm mb-4 text-slate-900 flex items-center gap-1.5">
+              <span>🎛️ 원두 매개변수 입력</span>
+            </h3>
+
+            <!-- 1. 배전도 선택 -->
+            <div class="mb-4">
+              <label class="block text-xs font-black text-slate-700 mb-1">볶음 강도 (배전도) [Page 17]</label>
+              <select id="engine-roast" onchange="runBrewingEngine()" class="w-full text-xs font-bold border-2 border-black rounded-lg p-2.5 bg-white focus:bg-yellow-100">
+                <option value="light">약배전 (화사한 산미, 고지대 원두) [92~98℃]</option>
+                <option value="medium" selected>중배전 (밸런스, 견과류 뉘앙스) [90~94℃]</option>
+                <option value="dark">강배전 (묵직한 초콜릿, 쓴맛 제어 필요) [88~92℃]</option>
+              </select>
+            </div>
+
+            <!-- 2. 잔 수 선택 -->
+            <div>
+              <label class="block text-xs font-black text-slate-700 mb-1">추출 용량 (서빙 잔 수)</label>
+              <select id="engine-cups" onchange="runBrewingEngine()" class="w-full text-xs font-bold border-2 border-black rounded-lg p-2.5 bg-white focus:bg-yellow-100">
+                <option value="1">1인분 치트키 드립 (에센스 용법)</option>
+                <option value="2">2인분 듬뿍 드립 (칼리타 185 전용)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 그라인더 마이크론 정보 박스 -->
+          <div class="bg-white border-2 border-black p-4 rounded-xl text-xs">
+            <span class="bg-black text-yellow-300 font-bold px-2 py-0.5 rounded text-[10px] block w-max mb-2">분쇄 가이드라인</span>
+            <p class="font-bold text-slate-900">그라인더 굵기: 깨소금 비유 ($1,150 \sim 1,350\mu m$) [Page 15]</p>
+            <p class="text-slate-500 mt-1 leading-relaxed">
+              가정용 저가 분쇄기는 열화 현상으로 맛을 파괴합니다. 핸드밀을 쓰실 바에야, 원두 구매 시 바리스타에게 "일반 핸드드립보다 굵고 깨소금만 한 크기로 일정하게 썰어달라" 하시는 것이 훨씬 화사한 한 잔을 지키는 길입니다. [Page 16]
+            </p>
+          </div>
+        </div>
+
+        <!-- 연산 결과 보드 (7칸) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl border-4 border-black p-5 sm:p-6 flex flex-col justify-between shadow-brutal-sm">
+          <div class="grid grid-cols-3 gap-3 border-b-2 border-black pb-4 text-center">
+            <div class="bg-coffee-50 p-2 rounded-lg border border-black">
+              <span class="text-[9px] text-slate-500 block font-black">정확한 원두량 [Page 17]</span>
+              <span id="eng-val-coffee" class="text-lg sm:text-2xl font-black text-coffee-800">20g</span>
+              <span id="eng-val-spoon" class="text-[9px] text-slate-500 block">약 2스푼</span>
+            </div>
+            <div class="bg-red-50 p-2 rounded-lg border border-black">
+              <span class="text-[9px] text-slate-500 block font-black">적합한 온수 온도</span>
+              <span id="eng-val-temp" class="text-sm sm:text-lg font-black text-red-600">90℃~94℃</span>
+              <span class="text-[9px] text-slate-400 block">절대 펄펄 끓이지 말 것!</span>
+            </div>
+            <div class="bg-blue-50 p-2 rounded-lg border border-black">
+              <span class="text-[9px] text-slate-500 block font-black">투입될 물 용량 [Page 18]</span>
+              <span id="eng-val-water" class="text-sm sm:text-lg font-black text-blue-600">100g</span>
+              <span class="text-[9px] text-slate-400 block">에센스 추출 수량</span>
+            </div>
+          </div>
+
+          <!-- 물방울 낙하 시뮬레이션 인터페이스 -->
+          <div class="my-5 p-4 bg-slate-50 border-2 border-black rounded-xl flex items-center justify-around relative overflow-hidden min-h-[120px]">
+            <div class="flex items-center gap-6 z-10">
+              <div class="text-center">
+                <span class="text-3xl">🫖</span>
+                <p class="text-[8px] font-bold text-slate-400 mt-1">포트</p>
+              </div>
+              <div class="relative w-10 h-16 flex justify-center">
+                <div class="w-1 bg-blue-300 h-full absolute opacity-20"></div>
+                <!-- 애니메이션 물방울 -->
+                <div class="w-3 h-3 bg-blue-500 rounded-full drip-effect absolute top-0"></div>
+                <div class="absolute bottom-0 bg-[#8e6236] w-8 h-3 rounded text-[7px] text-center text-white font-mono leading-none">원두층</div>
+              </div>
+              <div class="text-center">
+                <span class="text-3xl">🏺</span>
+                <p id="sim-status" class="text-[9px] font-black text-green-700 mt-1">에센스 추출 중</p>
+              </div>
+            </div>
+            <span class="absolute bottom-1 right-2 text-[8px] text-slate-400 font-mono">Yangbari Flow Simulator</span>
+          </div>
+
+          <!-- 순차적 스텝 바이 스텝 비법 목록 -->
+          <div class="space-y-2 text-xs">
+            <h4 class="font-black text-slate-800">☕ 황금 에센스 추출 시퀀스 [Page 18-19]</h4>
+            <div class="space-y-1 bg-amber-50/50 p-3 rounded-lg border border-black text-[11px]">
+              <p><strong>• 뜸들이기 (0초~40초):</strong> <span id="eng-step-1" class="font-bold text-coffee-800">물 30g</span>를 조심스레 돌려 적셔주고 기다립니다.</p>
+              <p><strong>• 본추출 (40초~2분):</strong> <span id="eng-step-2" class="font-bold text-coffee-800">물 70g</span>을 중심에서 외곽으로 벽을 허물지 않고 붓습니다.</p>
+              <p><strong>• 필터 탈거 (2분 준수):</strong> 드리퍼 내 남은 물이 있어도 즉시 쓰레기통으로 버리세요. [Page 19]</p>
+              <p class="text-[10px] text-red-600 font-bold mt-1">★ 획득한 에센스에 입맛대로 뜨거운 물 100~150ml나 얼음을 채워 희석하세요!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: NANO BANANA REAL-TIME COMIC GENERATOR (나노 바나나 웹툰 생성 캔버스) -->
+    <section class="print-page bg-white rounded-3xl border-4 border-black p-6 md:p-10 shadow-brutal-lg space-y-6">
+      <div class="border-b-4 border-black pb-4 text-center space-y-2">
+        <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3.5 py-1 rounded-full shadow-brutal-sm inline-block">AI COMIC STUDIO</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">양바리 AI 만화 발전소</h2>
+        <p class="text-slate-600 text-xs font-semibold">나노 바나나(Imagen-4) 엔진을 통해 원하는 브루잉 스토리를 기반으로 나만의 맞춤 만화 일러스트를 실시간 작화해보세요.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- 만화 명령 컨트롤러 (5칸) -->
+        <div class="lg:col-span-5 space-y-4 flex flex-col justify-between">
+          <div class="bg-slate-50 border-2 border-black p-4 rounded-xl space-y-4">
+            <div>
+              <label class="block text-xs font-black text-slate-700 mb-1">원하는 만화 연출 컨셉</label>
+              <select id="comic-concept" class="w-full text-xs font-bold border-2 border-black rounded-lg p-2.5 bg-white">
+                <option value="hario">초보자 하리오 참사: 콸콸 쏟아지는 물줄기에 절망하는 양바리</option>
+                <option value="bitter">도라지 쓴맛의 비밀: 물줄기를 흔들다 떫은맛이 대폭발하는 유머 만화</option>
+                <option value="ice">여름용 완벽한 아이스: 얼음 산맥 위로 에센스를 폭포처럼 떨어뜨려 기뻐함</option>
+                <option value="libre">커피리브레의 광기: 불량 원두를 돋보기로 매의 눈 감시하는 서필훈 사단 일러스트</option>
+              </select>
+            </div>
+
+            <!-- API 키 입력 필드 (가이드라인에 의거하여 기본값 공백 처리, 런타임 주입됨) -->
+            <div class="no-print">
+              <label class="block text-xs font-black text-slate-700 mb-1">API Key (전용 환경 실행 시 자동 주입)</label>
+              <input type="password" id="api-key-input" placeholder="자동 연동됨 (필요시 수동입력)" class="w-full text-xs font-bold border-2 border-black rounded-lg p-2 bg-white">
+            </div>
+
+            <button onclick="generateComicIllustration()" class="no-print w-full bg-black hover:bg-slate-800 text-yellow-300 font-black py-3 rounded-xl border-2 border-black shadow-brutal transition-all text-xs">
+              🎨 나노 바나나 AI 웹툰 그리기 (실시간 생성)
+            </button>
+          </div>
+
+          <!-- 로딩 안내 및 정보 -->
+          <div class="bg-yellow-50 p-4 rounded-xl border-2 border-black text-[11px] text-slate-600">
+            <span class="font-bold text-slate-900 block">📢 나노 바나나(Imagen 4.0) 작동 설명:</span>
+            버튼을 누르는 순간, Imagen-4 API 서버에 고해상도 만화 요청이 전송됩니다. 연동 키가 비어있는 기본 오프라인 상태를 대비하여 아래 패널에 멋진 수작업 SVG 원두 카툰이 기본 내장되어 있습니다.
+          </div>
+        </div>
+
+        <!-- 만화 캔버스 프레임 (7칸) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl border-4 border-black overflow-hidden shadow-brutal flex flex-col justify-between">
+          <div class="bg-black text-yellow-300 p-2 text-center font-mono text-xs font-black uppercase tracking-wider flex justify-between px-4">
+            <span>Yangbari Webtoon Canvas</span>
+            <span id="canvas-status" class="text-emerald-400">● READY</span>
+          </div>
+
+          <!-- 실제 캔버스 뷰포트 -->
+          <div class="p-6 flex-1 flex flex-col items-center justify-center min-h-[300px] bg-amber-50/20" id="canvas-container">
+            <!-- 디폴트 귀여운 커피 카툰 만화 (SVG) -->
+            <div id="default-comic" class="w-full text-center space-y-4">
+              <svg class="mx-auto w-32 h-32 text-amber-700 animate-pulse" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 드리퍼 및 커피 뿜어내는 양바리 -->
+                <circle cx="50" cy="50" r="45" fill="#fdf2e9" stroke="#000" stroke-width="3"/>
+                <path d="M30 40 L70 40 L60 70 L40 70 Z" fill="#aa7c47" stroke="#000" stroke-width="3"/>
+                <path d="M25 40 H75" stroke="#000" stroke-width="4"/>
+                <circle cx="50" cy="52" r="3" fill="#ffefdb"/>
+                <path d="M48 60 Q50 63 52 60" stroke="#000" stroke-width="2"/>
+                <path d="M35 70 Q50 85 65 70" stroke="#000" stroke-width="3" fill="none"/>
+              </svg>
+              <div class="bg-white p-3 rounded-xl border-2 border-black comic-bubble relative max-w-sm mx-auto shadow-brutal-sm">
+                <p class="font-hand text-xl font-bold text-slate-900">"하리오는 프로의 칼춤과 같습니다!<br>초보자는 칼리타 웨이브로 편하게 가세요!"</p>
+              </div>
+              <p class="text-[10px] text-slate-400 font-bold mt-2">※ 이미지를 생성하면 이곳에 AI 카툰이 실시간 주입됩니다.</p>
+            </div>
+
+            <!-- 로더 (평소엔 숨김) -->
+            <div id="canvas-loader" class="hidden text-center space-y-4">
+              <div class="inline-block w-12 h-12 border-4 border-black border-t-yellow-300 rounded-full animate-spin"></div>
+              <p class="text-xs font-black text-slate-800">양바리 캔버스에서 나노 바나나로 브루잉 만화를 그리고 있습니다...</p>
+              <p class="text-[10px] text-slate-400">약 5~10초 가량 소요됩니다.</p>
+            </div>
+
+            <!-- 생성된 AI 이미지 출력 태그 -->
+            <img id="generated-image" class="hidden w-full max-h-[350px] object-contain rounded-lg border-2 border-black shadow-brutal-sm" alt="생성된 웹툰">
+          </div>
+          
+          <div class="bg-slate-100 p-2.5 text-center text-[10px] font-bold border-t-2 border-black">
+            출처 증빙: 커피브루잉다이어리 도서 제1장 드립의 원리와 실패 원인 분석 [Page 5]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: DESIRED TASTE SELECTION & TASTE COMPASS (사용자 맞춤형 커피 맛 조율 및 상품 제시) -->
+    <section class="print-page bg-white rounded-3xl border-4 border-black p-6 md:p-10 shadow-brutal-lg space-y-10">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3.5 py-1 rounded-full shadow-brutal-sm inline-block">MATCHING SYSTEM</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">자가 진단 맞춤형 맛 가이드 &amp; 추천 원두 매칭</h2>
+        <p class="text-slate-600 text-xs font-semibold">본인이 마시고 싶거나 개선하고 싶은 희망 상태를 고르면 즉시 그 조작 변수와 실제 명품 상품 리스트를 증빙 출처와 함께 불러옵니다. [Page 31-41]</p>
+      </div>
+
+      <!-- 타겟 탭 선택 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 no-print">
+        <button onclick="selectTargetFlavor('nutty')" id="btn-f-nutty" class="py-2.5 px-2 rounded-xl border-2 border-black font-black text-xs transition-all bg-yellow-100 shadow-brutal-sm">
+          🌰 고소하고 묵직한 맛
+        </button>
+        <button onclick="selectTargetFlavor('fruity')" id="btn-f-fruity" class="py-2.5 px-2 rounded-xl border-2 border-black font-black text-xs transition-all bg-white hover:bg-slate-50">
+          🍒 산뜻하고 화사한 산미
+        </button>
+        <button onclick="selectTargetFlavor('sweet')" id="btn-f-sweet" class="py-2.5 px-2 rounded-xl border-2 border-black font-black text-xs transition-all bg-white hover:bg-slate-50">
+          🍯 꿀 같은 단맛과 밸런스
+        </button>
+        <button onclick="selectTargetFlavor('bitter_fail')" id="btn-f-bitter_fail" class="py-2.5 px-2 rounded-xl border-2 border-black font-black text-xs transition-all bg-white hover:bg-slate-50">
+          💥 떫고 도라지 같은 쓴맛 탈출
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-2">
+        <!-- 7가지 변수 대입 교정 지침서 -->
+        <div class="border-4 border-black rounded-2xl p-5 bg-coffee-50 shadow-brutal flex flex-col justify-between">
+          <div>
+            <h3 class="font-black text-slate-950 text-base mb-2 flex items-center gap-1.5">
+              <span>🧭 맛의 나침반 제어 지침</span>
+              <span class="text-[9px] bg-coffee-300 text-coffee-950 font-bold px-2 py-0.5 rounded">Page 32-35</span>
+            </h3>
+            <p class="text-xs text-slate-600 mb-4" id="flavor-adjust-desc">
+              고소하고 묵직한 질감을 살리려면, 물 추출 온도를 다소 낮춰 자극 성분을 봉쇄하고 굵직하게 성분을 유도해야 합니다.
+            </p>
+
+            <div class="overflow-x-auto text-[11px]">
+              <table class="w-full text-left">
+                <thead>
+                  <tr class="border-b-2 border-black text-slate-700">
+                    <th class="py-1.5 font-bold">변수 제어기 [Page 32]</th>
+                    <th class="py-1.5 font-black text-red-700">추천 액션 [Page 34]</th>
+                  </tr>
+                </thead>
+                <tbody id="flavor-adjust-table-body" class="divide-y divide-slate-200">
+                  <!-- JS에서 렌더링 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="bg-white border-2 border-black p-3.5 rounded-xl mt-6">
+            <span class="bg-red-500 text-white font-black text-[9px] px-2 py-0.5 rounded uppercase">양바리의 절대 수칙</span>
+            <p class="text-[10px] text-slate-600 mt-1 font-semibold">"한 번에 물 온도와 그라인더 눈금을 둘 다 바꾸지 마세요. 하나만 수정해야 혀가 데이터를 정확히 학습할 수 있습니다." [Page 34]</p>
+          </div>
+        </div>
+
+        <!-- 검증 스페셜티 실제 원두 상품 매칭 카드 -->
+        <div class="border-4 border-black rounded-2xl p-5 bg-amber-50/40 shadow-brutal flex flex-col justify-between">
+          <div>
+            <h3 class="font-black text-slate-950 text-base mb-1 flex items-center gap-1.5">
+              <span>🛒 15년 차 바리스타 검증 실제 원두 목록</span>
+              <span class="text-[9px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded">Page 38-41</span>
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">시커멓게 태워 불량 생두를 속이는 양심 불량 숍들을 걸러내는 진짜 스페셜티 구매처입니다.</p>
+
+            <div id="flavor-bean-container" class="space-y-3">
+              <!-- JS에서 매칭되는 상품 리스트 렌더링 -->
+            </div>
+          </div>
+
+          <p class="text-[10px] text-slate-400 mt-4 text-center">※ 원본 가이드북 Page 37~41에 수록된 엄선된 국가대표급 로스터리 목록 및 가격 기준입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: 3 CHAMPIONS' BREWING CARDS (A4 인쇄용 추출 비법 카드) -->
+    <section class="print-page bg-white rounded-3xl border-4 border-black p-6 md:p-8 shadow-brutal-lg space-y-8">
+      <div class="border-b-4 border-black pb-4 text-center space-y-2">
+        <span class="bg-yellow-300 text-black border-2 border-black font-black text-xs px-3 py-1 rounded-full shadow-brutal-sm inline-block">POSTER SECTION</span>
+        <h2 class="text-2xl md:text-3xl font-black text-slate-950">월드 챔피언 추출법 모음 가이드</h2>
+        <p class="text-slate-600 text-xs font-semibold">연습과 침출 병용이 가능한 최정상 바리스타들의 황금 비율 포스터북 [Page 21-24]</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="border-4 border-black rounded-2xl p-4 bg-orange-50/50 flex flex-col justify-between shadow-brutal text-xs">
+          <div>
+            <div class="flex justify-between items-start border-b border-black pb-2">
+              <span class="bg-black text-white px-2 py-0.5 rounded text-[9px] font-black">TETSU 2025</span>
+              <span class="font-black text-slate-500">HOT 전용 [Page 21]</span>
+            </div>
+            <h4 class="font-black text-sm text-slate-900 mt-2">테츠 카스야 4:6 최신 기법</h4>
+            <p class="text-[10px] text-slate-500 mt-1">원두 20g / 물 300g. 침출 중반에 주전자에 찬물을 주입해 자극적 쓴맛을 통제하는 기적의 공식.</p>
+            
+            <div class="space-y-1.5 mt-3 border-t border-dashed border-slate-300 pt-3 text-[10px]">
+              <p><strong>• 0초 (스위치 닫음):</strong> 90℃ 물 40g 뜸 들이기</p>
+              <p><strong>• 40초 (스위치 열림):</strong> 가볍게 회전하며 80g 주입</p>
+              <p><strong>• 1분 30초:</strong> 주전자에 찬물 200g을 섞어 온도를 70도대로 다운!</p>
+              <p><strong>• 2분 10초 (스위치 닫음):</strong> 낮아진 온도 물 100g 최종 투입</p>
+            </div>
+          </div>
+          <p class="text-[9px] bg-white p-2 border border-black rounded mt-4 text-slate-500">
+            <strong>코멘트:</strong> 찬물 조합 기법은 약배전 원두의 화사함만 남기고 잡미를 완전히 가두어줍니다. [Page 21]
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="border-4 border-black rounded-2xl p-4 bg-sky-50 flex flex-col justify-between shadow-brutal text-xs">
+          <div>
+            <div class="flex justify-between items-start border-b border-black pb-2">
+              <span class="bg-blue-600 text-white px-2 py-0.5 rounded text-[9px] font-black border border-black">4-8-8 ICE</span>
+              <span class="font-black text-slate-500">ICE 전용 [Page 22]</span>
+            </div>
+            <h4 class="font-black text-sm text-slate-900 mt-2">김승백 &amp; 조지 아이스 공식</h4>
+            <p class="text-[10px] text-slate-500 mt-1">원두 20g / 물 200g. 얼음이 쉽게 녹아 밍밍해지지 않도록 에센스의 농도를 극단화.</p>
+            
+            <div class="space-y-1.5 mt-3 border-t border-dashed border-slate-300 pt-3 text-[10px]">
+              <p><strong>• 뜸들이기 (스위치 닫음):</strong> 94~96℃ 고온 수 40g 주입</p>
+              <p><strong>• 40초 (스위치 개방):</strong> 서클 푸어로 물 80g 낙차 드립</p>
+              <p><strong>• 1분 10초:</strong> 한가운데 얇게 꽂아 넣는 센터 푸어 80g</p>
+              <p><strong>• 2분 10초:</strong> 원액을 산더미 같은 얼음컵에 다이렉트 푸어!</p>
+            </div>
+          </div>
+          <p class="text-[9px] bg-white p-2 border border-black rounded mt-4 text-slate-500">
+            <strong>코멘트:</strong> 드리핑 서버 내부에서 얼음이 서서히 녹지 않게 급랭 가공하는 것이 풍미의 요체입니다. [Page 23]
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="border-4 border-black rounded-2xl p-4 bg-emerald-50/50 flex flex-col justify-between shadow-brutal text-xs">
+          <div>
+            <div class="flex justify-between items-start border-b border-black pb-2">
+              <span class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[9px] font-black border border-black">HOFFMANN</span>
+              <span class="font-black text-slate-500">침출 구원 [Page 24]</span>
+            </div>
+            <h4 class="font-black text-sm text-slate-900 mt-2">제임스 호프만 침출 응급식</h4>
+            <p class="text-[10px] text-slate-500 mt-1">원두 20g / 온수 300g (스위치 200 전용). 대충 부어 망쳐가는 푸어링을 즉시 우려내기로 응급 교정.</p>
+            
+            <div class="space-y-1.5 mt-3 border-t border-dashed border-slate-300 pt-3 text-[10px]">
+              <p><strong>• 사전 단계 (스위치 닫음):</strong> 펄펄 끓는 물 300g을 먼저 투하</p>
+              <p><strong>• 원두 주입:</strong> 그 위에 준비해둔 원두 가루 20g을 사뿐히 올림</p>
+              <p><strong>• 교반 작업:</strong> 스푼으로 원두 가루를 부드럽게 3~4회 저어줌</p>
+              <p><strong>• 추출 마감:</strong> 가만히 3~4분 우려낸 후 스위치를 열어 수득</p>
+            </div>
+          </div>
+          <p class="text-[9px] bg-white p-2 border border-black rounded mt-4 text-slate-500">
+            <strong>코멘트:</strong> 가루보다 물을 무조건 먼저 넣어야 유공 필터 구멍이 커피 찌꺼기로 막히는 막힘 현상이 일체 차단됩니다. [Page 24]
+          </p>
+        </div>
+      </div>
+
+      <!-- 인쇄 푸터 정보 -->
+      <div class="border-t-4 border-black pt-6 text-center text-[10px] text-slate-400 font-bold font-mono uppercase tracking-widest">
+        © COFFEE BREWING DIARY DESIGNED BY BARISTA YANG. ALL RIGHTS RESERVED.
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // -----------------------------------------------------------------
+    // 전역 변수 설정
+    // -----------------------------------------------------------------
+    const apiKey = ""; // API 키는 런타임 환경에서 주입되는 구조로 동작합니다.
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+    // -----------------------------------------------------------------
+    // 1. 실시간 브루잉 계산 엔진 (Brewing Engine)
+    // -----------------------------------------------------------------
+    function runBrewingEngine() {
+      const roast = document.getElementById('engine-roast').value;
+      const cups = parseInt(document.getElementById('engine-cups').value);
+
+      let coffeeGrams = 20;
+      let spoonText = "가득 약 2스푼";
+      let tempText = "90℃ ~ 94℃";
+      let waterAmount = 70;
+      let step1Water = 30;
+
+      // 배전도별 세부 연산
+      if (roast === 'light') {
+        coffeeGrams = cups === 1 ? 25 : 50;
+        spoonText = cups === 1 ? "수북이 약 2.5스푼" : "수북이 약 5스푼";
+        tempText = "92℃ ~ 98℃";
+      } else { // medium, dark
+        coffeeGrams = cups === 1 ? 20 : 40;
+        spoonText = cups === 1 ? "깎아서 약 2스푼" : "깎아서 약 4스푼";
+        tempText = roast === 'dark' ? "88℃ ~ 92℃" : "90℃ ~ 94℃";
+      }
+
+      // 인원수에 따른 물양 연산
+      if (cups === 2) {
+        step1Water = 60;
+        waterAmount = 140;
+      } else {
+        step1Water = 30;
+        waterAmount = 70;
+      }
+
+      // UI 업데이트
+      document.getElementById('eng-val-coffee').innerText = `${coffeeGrams}g`;
+      document.getElementById('eng-val-spoon').innerText = spoonText;
+      document.getElementById('eng-val-temp').innerText = tempText;
+      document.getElementById('eng-val-water').innerText = `${waterAmount}g (누적 ${step1Water + waterAmount}g)`;
+      
+      document.getElementById('eng-step-1').innerText = `물 ${step1Water}g`;
+      document.getElementById('eng-step-2').innerText = `물 ${waterAmount}g`;
+      document.getElementById('eng-step-3').innerText = `에센스 약 ${cups === 1 ? '60~90ml' : '120~180ml'}`;
+    }
+
+    // -----------------------------------------------------------------
+    // 2. 나노 바나나 AI 웹툰 생성기 (Imagen 4.0 API 연동)
+    // -----------------------------------------------------------------
+    async function generateComicIllustration() {
+      const concept = document.getElementById('comic-concept').value;
+      const userApiKey = document.getElementById('api-key-input').value.trim() || apiKey;
+
+      const canvasStatus = document.getElementById('canvas-status');
+      const defaultComic = document.getElementById('default-comic');
+      const canvasLoader = document.getElementById('canvas-loader');
+      const generatedImage = document.getElementById('generated-image');
+
+      // UI 상태 변경
+      canvasStatus.innerText = "● GENERATING...";
+      canvasStatus.className = "text-yellow-400";
+      defaultComic.classList.add('hidden');
+      generatedImage.classList.add('hidden');
+      canvasLoader.classList.remove('hidden');
+
+      // 프롬프트 가내 생성
+      let promptText = "";
+      if (concept === "hario") {
+        promptText = "A single panel high-quality comic strip in webtoon style showing a cute Korean barista character named 'Yangbari' wearing a brown coffee bean shaped hat, looking shocked as hot water overflows rapidly from a Kalita coffee filter. Pastel colors, bold clean outlines, cozy coffee shop background, funny and humorous tone, hand-drawn vector art style.";
+      } else if (concept === "bitter") {
+        promptText = "A funny single panel comic in cartoon style of a cute glasses-wearing Korean barista in a coffee bean hat. He is looking at a cup of coffee that tastes terribly bitter, surrounded by funny icons of bitter medicine and crying emoticons. Clean borders, neubrutalism aesthetic, beautiful light background, hand-drawn digital illustration.";
+      } else if (concept === "ice") {
+        promptText = "A joyful cartoon webtoon panel of a cute Korean barista pouring rich dark espresso essence directly onto a mountain of crystal-clear ice cubes in a glass cup. Splash effects of cold coffee, bright tropical blue and yellow background, clean outline, cute comic art.";
+      } else { // libre
+        promptText = "A cute comic strip illustration showing serious baristas inspecting coffee beans with magnifying glasses to pick out insect-damaged beans under a bright spotlight. Warm cozy atmosphere, minimalist cartoon lineart, cute design, hand-drawn style.";
+      }
+
+      // 지연 호출을 위한 백오프 연산 유틸 함수
+      const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+      // API 호출 로직 (최대 5회 지수 백오프)
+      const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${userApiKey}`;
+      const payload = {
+        instances: { prompt: promptText },
+        parameters: { sampleCount: 1 }
+      };
+
+      let retries = 5;
+      let delayMs = 1000;
+      let success = false;
+      let base64Data = "";
+
+      for (let i = 0; i < retries; i++) {
+        try {
+          const response = await fetch(targetUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            base64Data = data.predictions?.[0]?.bytesBase64Encoded;
+            if (base64Data) {
+              success = true;
+              break;
+            }
+          }
+        } catch (err) {
+          // Silent catch for backoff retries (instruction: Do not log retries to console)
+        }
+
+        // 백오프 대기 시간 2배 증가
+        await delay(delayMs);
+        delayMs *= 2;
+      }
+
+      if (success && base64Data) {
+        generatedImage.src = `data:image/png;base64,${base64Data}`;
+        generatedImage.classList.remove('hidden');
+        canvasLoader.classList.add('hidden');
+        canvasStatus.innerText = "● SUCCESS";
+        canvasStatus.className = "text-emerald-400";
+      } else {
+        // 호출 실패 시 사용자 친화적인 메시지와 기본 만화 복구
+        canvasLoader.classList.add('hidden');
+        defaultComic.classList.remove('hidden');
+        canvasStatus.innerText = "● ERROR";
+        canvasStatus.className = "text-red-500";
+        alert("나노 바나나 일러스트를 생성할 수 없습니다. 유효한 API Key를 주입하거나 런타임 환경 상태를 확인해주세요. 기본 카툰이 유지됩니다.");
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // 3. 실시간 희망 맛 매칭 및 나침반 처방전 데이터베이스
+    // -----------------------------------------------------------------
+    const flavorDB = {
+      nutty: {
+        desc: "고소하고 묵직한 바디감을 구현하려면, 88~92℃ 가량의 다소 낮고 중후한 온도를 써서 과도한 떫은맛과 잡성분을 피하고 성분을 묵직하게 뽑아내어야 합니다.",
+        actions: [
+          { name: "1. 물 온도 추천", action: "<strong>88℃ ~ 92℃</strong>로 내려 쓴맛과 거친 자극을 원천 방지하세요. [Page 34]" },
+          { name: "2. 분쇄 크기 가이드", action: "<strong>깨소금보다 약간 크게 (1,350µm)</strong> 갈아서 정체 유속을 단축시키세요. [Page 32]" },
+          { name: "3. 물 타격 횟수", action: "새로운 물을 <strong>최대 2~3회</strong>만 나누어 빠르게 끝마치세요. [Page 18]" },
+          { name: "4. 교반 지침", action: "추출 도중 가루를 <strong>스푼으로 일절 젓지 않고</strong> 정적으로 침적시키세요." }
+        ],
+        beans: [
+          { company: "커피 리브레 [Page 38]", name: "노크록스 (No Crocs) 블렌드", price: "15,000원", notes: "다크초콜릿, 호두, 카카오의 고소한 단맛", url: "#" },
+          { company: "프릳츠 커피 컴퍼니 [Page 39]", name: "올드독 (Old Dog) 스페셜티", price: "16,000원", notes: "다크 초콜릿의 부드럽고 묵직한 중후함", url: "#" },
+          { company: "모모스커피 [Page 40]", name: "에스쇼콜라 (Es Chocolate)", price: "16,500원", notes: "카카오 닙스와 밀크초콜릿의 부드러움", url: "#" }
+        ]
+      },
+      fruity: {
+        desc: "화사하고 산뜻한 과일 같은 시트러스 산미를 살리려면, 고온 온수를 써서 유기산과 꽃향기 에너지를 빠르고 화려하게 살려야 합니다.",
+        actions: [
+          { name: "1. 물 온도 추천", action: "<strong>93℃ ~ 98℃</strong> 고온을 사용하여 화려한 꽃향기를 고속 추출하세요. [Page 34]" },
+          { name: "2. 분쇄 크기 가이드", action: "<strong>깨소금 굵기 (1,150µm)</strong>로 약간 가늘게 갈아 표면적을 확보하세요. [Page 32]" },
+          { name: "3. 물 타격 횟수", action: "용매 교체를 위해 <strong>4~5회 쪼개어</strong> 물을 타격하세요. [Page 35]" },
+          { name: "4. 교반 지침", action: "뜸 들일 때 <strong>가볍게 3바퀴 좌우로 흔들어</strong> 가루를 섞어주세요. [Page 23]" }
+        ],
+        beans: [
+          { company: "토치커피 [Page 41]", name: "에티오피아 예가체프 아리차", price: "18,000원", notes: "살구, 복숭아, 재스민의 기분 좋은 시트러스", url: "#" },
+          { company: "시그니쳐 로스터스 [Page 41]", name: "에티오피아 시다마 아르베고나 싱글", price: "19,000원", notes: "베리류의 과즙과 기분 좋은 달콤한 산미", url: "#" },
+          { company: "커피 리브레 [Page 38]", name: "배드블러드 (Bad Blood) 블렌드", price: "15,500원", notes: "오렌지, 자두, 과일잼 같은 화사한 과즙 질감", url: "#" }
+        ]
+      },
+      sweet: {
+        desc: "꿀 같은 풍성한 단맛과 전체적인 밸런스를 잡으려면, 온도를 표준 90~93℃로 단속하고 물과 만나는 시간 비율을 정교하게 가이드해야 합니다.",
+        actions: [
+          { name: "1. 물 온도 추천", action: "<strong>90℃ ~ 93℃</strong> 표준 드립 포인트를 단속하여 탄탄하게 만듭니다. [Page 17]" },
+          { name: "2. 분쇄 크기 가이드", action: "<strong>전형적인 깨소금 굵기 (1,250µm)</strong>를 완벽하게 유지하세요. [Page 15]" },
+          { name: "3. 물 타격 횟수", action: "뜸들이기 후 본추출을 <strong>딱 3번</strong> 적당하게 분할합니다. [Page 18]" },
+          { name: "4. 교반 지침", action: "난류가 적당히 생성되도록 너무 세지도 약하지도 않게 물줄기를 드립하세요." }
+        ],
+        beans: [
+          { company: "프릳츠 커피 컴퍼니 [Page 39]", name: "잘 되어 가시나 블렌드", price: "16,000원", notes: "기분 좋은 흑설탕 같은 풍부한 밸런스와 단맛", url: "#" },
+          { company: "딥블루레이크 [Page 40]", name: "블루 블렌드 스페셜티", price: "17,000원", notes: "망고, 꿀맛 같은 완벽한 복합적 밸런스 균형", url: "#" },
+          { company: "모모스커피 [Page 40]", name: "프루티 봉봉 블렌드", price: "16,500원", notes: "복숭아, 살구 시럽의 산뜻하면서 부드러운 맛", url: "#" }
+        ]
+      },
+      bitter_fail: {
+        desc: "마시자마자 갈증을 유발하는 떫고 도라지 쓴맛이 난다면, 그것은 백퍼센트 원두 성분이 과하게 빠져나온 '과다 추출' 상태입니다.",
+        actions: [
+          { name: "1. 물 온도 추천", action: "온수를 <strong>85℃ ~ 88℃</strong>로 확 낮추어 불필요한 후반부 성분을 막으세요. [Page 34]" },
+          { name: "2. 분쇄 크기 가이드", action: "너무 미세하게 갈린 가루를 버리고 <strong>확실히 굵게(1,400µm)</strong> 가세요. [Page 32]" },
+          { name: "3. 물 타격 횟수", action: "물 주는 횟수를 <strong>1~2회로 전폭 축소</strong>하여 가루 마찰을 줄이세요. [Page 34]" },
+          { name: "4. 교반 지침", action: "스푼으로 가루를 젓는 행동을 <strong>일체 절대 하지 마십시오.</strong> [Page 34]" }
+        ],
+        beans: [
+          { company: "딥블루레이크 [Page 40]", name: "딥 블렌드 (무결점 가공)", price: "16,500원", notes: "광학 선별기로 결점두를 싹 거른 잡미 제로의 깔끔함", url: "#" },
+          { company: "시그니쳐 로스터스 [Page 41]", name: "시그니쳐 블렌드 밸런서", price: "16,000원", notes: "자극이나 잡내 없이 끝없이 넘어가는 정갈함", url: "#" }
+        ]
+      }
+    };
+
+    function selectTargetFlavor(type) {
+      const btnNutty = document.getElementById('btn-f-nutty');
+      const btnFruity = document.getElementById('btn-f-fruity');
+      const btnSweet = document.getElementById('btn-f-sweet');
+      const btnBitterFail = document.getElementById('btn-f-bitter_fail');
+
+      // 탭 스타일 초기화
+      [btnNutty, btnFruity, btnSweet, btnBitterFail].forEach(btn => {
+        btn.className = "py-2.5 px-2 rounded-xl border-2 border-black font-black text-xs transition-all bg-white hover:bg-slate-50 shadow-none";
+      });
+
+      // 선택 탭 활성화 (뉴브루탈리즘 테마)
+      const targetBtn = document.getElementById(`btn-f-${type}`);
+      targetBtn.className = "py-2.5 px-2 rounded-xl border-2 border-black font-black text-xs transition-all bg-yellow-100 shadow-brutal-sm";
+
+      const data = flavorDB[type];
+
+      // 설명글 갱신
+      document.getElementById('flavor-adjust-desc').innerHTML = data.desc;
+
+      // 테이블 갱신
+      const tableBody = document.getElementById('flavor-adjust-table-body');
+      tableBody.innerHTML = '';
+      data.actions.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="py-2.5 font-bold text-slate-800">${item.name}</td>
+          <td class="py-2.5 text-slate-600">${item.action}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+
+      // 원두 상품 목록 갱신
+      const beanContainer = document.getElementById('flavor-bean-container');
+      beanContainer.innerHTML = '';
+      data.beans.forEach(bean => {
+        const div = document.createElement('div');
+        div.className = "bg-white p-3 rounded-xl border-2 border-black shadow-brutal-sm text-xs space-y-1";
+        div.innerHTML = `
+          <div class="flex justify-between items-center font-black">
+            <span class="text-coffee-900">${bean.company}</span>
+            <span class="text-slate-500 font-bold">${bean.price}</span>
+          </div>
+          <p class="font-bold text-slate-900">${bean.name}</p>
+          <p class="text-[11px] text-slate-500">${bean.notes}</p>
+        `;
+        beanContainer.appendChild(div);
+      });
+    }
+
+    // -----------------------------------------------------------------
+    // 4. 초기 실행 프로세스
+    // -----------------------------------------------------------------
+    window.onload = function() {
+      runBrewingEngine();
+      selectTargetFlavor('nutty');
+    };
+  </script>
+</body>
+</html>
